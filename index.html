@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нумерологический калькулятор - 32 расчета</title>
+    <title>Нумерологический калькулятор - 32 глубоких расчета</title>
     <style>
         * {
             margin: 0;
@@ -13,27 +13,30 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1a2a6c, #2c3e50, #4a6491);
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #0f1a3c 0%, #1a2a6c 35%, #2c3e50 70%, #0f1a3c 100%);
             background-attachment: fixed;
             padding: 20px;
+            min-height: 100vh;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
+            padding: 20px;
         }
         
         header {
             text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 50px 30px 40px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         header::before {
@@ -42,57 +45,73 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 8px;
-            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
+            height: 10px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc, #00c9ff);
+            z-index: 10;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 120%, rgba(255, 215, 0, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 1;
         }
         
         h1 {
-            font-size: 3.2rem;
-            margin-bottom: 15px;
+            font-size: 3.8rem;
+            margin-bottom: 20px;
             background: linear-gradient(90deg, #1a2a6c, #2c3e50, #4a6491, #2c3e50, #1a2a6c);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            letter-spacing: -1px;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 2;
         }
         
         .subtitle {
-            font-size: 1.4rem;
-            color: #2c3e50;
-            max-width: 800px;
-            margin: 0 auto 25px;
+            font-size: 1.55rem;
+            color: #1a2a6c;
+            max-width: 850px;
+            margin: 0 auto 30px;
             font-weight: 500;
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
         }
         
         .calculator-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        @media (min-width: 900px) {
-            .calculator-container {
-                grid-template-columns: 1fr 1fr;
-            }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 40px;
         }
         
         .input-section, .results-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 25px;
+            padding: 45px;
+            box-shadow: 0 12px 45px rgba(0, 0, 0, 0.28);
+            width: 100%;
+            max-width: 900px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
         }
         
         .input-section h2, .results-section h2 {
-            font-size: 2.1rem;
-            margin-bottom: 25px;
-            color: #2c3e50;
+            font-size: 2.4rem;
+            margin-bottom: 35px;
+            color: #1a2a6c;
             text-align: center;
             position: relative;
-            padding-bottom: 12px;
+            padding-bottom: 15px;
+            font-weight: 700;
         }
         
         .input-section h2::after, .results-section h2::after {
@@ -101,65 +120,95 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, #ff8a00, #da1b60);
-            border-radius: 2px;
+            width: 90px;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb);
+            border-radius: 3px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 25px;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.1rem;
+            color: #1a2a6c;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        label::before {
+            content: "•";
+            color: #da1b60;
+            font-size: 1.8rem;
+            margin-right: 8px;
+            line-height: 0.7;
         }
         
         input[type="date"], input[type="text"], input[type="time"], input[type="place"] {
             width: 100%;
-            padding: 16px;
-            border: 2px solid #e1e5eb;
-            border-radius: 12px;
-            font-size: 1.15rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            padding: 18px;
+            border: 2px solid #d1d8e0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            transition: all 0.4s ease;
+            background: #f8fafc;
+            font-weight: 500;
         }
         
         input[type="date"]:focus, input[type="text"]:focus, input[type="time"]:focus {
             border-color: #4a6491;
-            box-shadow: 0 0 0 3px rgba(74, 100, 145, 0.2);
+            box-shadow: 0 0 0 4px rgba(74, 100, 145, 0.18);
             background: #fff;
+            transform: translateY(-1px);
         }
         
         button {
-            background: linear-gradient(90deg, #4a6491, #2c3e50, #1a2a6c);
+            background: linear-gradient(90deg, #1a2a6c, #2c3e50, #4a6491, #2c3e50, #1a2a6c);
             color: white;
             border: none;
-            padding: 18px 45px;
-            font-size: 1.35rem;
-            border-radius: 50px;
+            padding: 22px 75px;
+            font-size: 1.55rem;
+            border-radius: 60px;
             cursor: pointer;
             display: block;
-            margin: 35px auto 0;
-            transition: all 0.4s ease;
-            font-weight: 600;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(26, 42, 108, 0.4);
+            margin: 40px auto 0;
+            transition: all 0.5s ease;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            box-shadow: 0 8px 25px rgba(26, 42, 108, 0.55);
             position: relative;
             overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: fit-content;
+            min-width: 320px;
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(26, 42, 108, 0.55);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 35px rgba(26, 42, 108, 0.7);
+            background: linear-gradient(90deg, #0f1a3c, #1a2a6c, #2c3e50, #1a2a6c, #0f1a3c);
         }
         
         button:active {
-            transform: translateY(1px);
+            transform: translateY(1px) scale(0.98);
         }
         
         button::after {
@@ -169,9 +218,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 100%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.25) 100%);
             transform: rotate(30deg);
-            transition: all 0.8s;
+            transition: all 1.2s;
         }
         
         button:hover::after {
@@ -180,12 +229,14 @@
         
         .results-container {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+            width: 100%;
+            justify-content: center;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
             .results-container {
                 grid-template-columns: 1fr;
             }
@@ -193,79 +244,133 @@
         
         .calculation-card {
             background: white;
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-            border-top: 5px solid #4a6491;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.22);
+            border-top: 6px solid;
+            border-image: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc) 1;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .calculation-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
         }
         
         .calculation-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.32);
+            border-top-width: 8px;
         }
         
         .calculation-card h3 {
-            font-size: 1.65rem;
-            margin-bottom: 15px;
-            color: #1a2a6c;
+            font-size: 1.85rem;
+            margin-bottom: 20px;
+            color: #0f1a3c;
             display: flex;
             align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #eaeff5;
         }
         
         .calculation-card h3::before {
-            content: "•";
+            content: "✦";
             color: #da1b60;
-            font-size: 2.2rem;
-            margin-right: 10px;
-            line-height: 0.7;
+            font-size: 1.9rem;
+            margin-right: 12px;
+            line-height: 1;
         }
         
         .result-value {
-            font-size: 2.8rem;
+            font-size: 4.2rem;
             font-weight: 800;
             text-align: center;
-            margin: 15px 0;
+            margin: 20px 0 25px;
             background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            line-height: 1;
+            position: relative;
+        }
+        
+        .result-value::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
+            border-radius: 2px;
         }
         
         .explanation {
-            background: #f0f4f8;
-            border-left: 4px solid #4a6491;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.95rem;
+            background: #f0f7ff;
+            border-left: 5px solid #4a6491;
+            padding: 22px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(74, 100, 145, 0.08);
+        }
+        
+        .explanation::before {
+            content: """;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            font-size: 5rem;
+            color: rgba(74, 100, 145, 0.15);
+            font-family: Georgia, serif;
+            line-height: 1;
         }
         
         .calculation {
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-            color: #4a5568;
-            padding-left: 10px;
-            border-left: 2px dashed #cbd5e0;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 20px 0;
+            border: 1px solid #e1e8f0;
+            font-size: 1.02rem;
+            line-height: 1.65;
+        }
+        
+        .calculation strong {
+            color: #1a2a6c;
+            font-weight: 600;
         }
         
         .master-number {
-            background: linear-gradient(90deg, #ff8a00, #da1b60);
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
-            font-size: 1.1em;
+            font-weight: 800;
+            font-size: 1.2em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: inline-block;
         }
         
         .section-title {
             text-align: center;
-            font-size: 2.3rem;
-            margin: 50px 0 30px;
+            font-size: 2.6rem;
+            margin: 60px 0 40px;
             color: white;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
         .section-title::after {
@@ -274,148 +379,214 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
-            border-radius: 2px;
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc, #00c9ff);
+            border-radius: 3px;
         }
         
         .intro-text {
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            font-size: 1.15rem;
-            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 25px;
+            padding: 45px;
+            margin-bottom: 50px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .intro-text p {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .intro-text p::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #da1b60;
+            font-size: 1.8rem;
+            top: -3px;
         }
         
         .highlight {
-            background: linear-gradient(120deg, rgba(255,215,0,0.2), rgba(255,105,180,0.15));
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: 600;
+            background: linear-gradient(120deg, rgba(255,215,0,0.35), rgba(255,105,180,0.25));
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            color: #1a2a6c;
         }
         
         footer {
             text-align: center;
-            padding: 25px;
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1.05rem;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 35px 20px 25px;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1.15rem;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            line-height: 1.6;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.9rem;
             }
             
             .subtitle {
-                font-size: 1.15rem;
+                font-size: 1.3rem;
             }
             
             .input-section, .results-section {
-                padding: 20px;
+                padding: 30px 25px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
             }
             
             button {
-                padding: 15px 35px;
-                font-size: 1.2rem;
+                padding: 18px 50px;
+                font-size: 1.35rem;
+                min-width: 280px;
             }
             
             .result-value {
-                font-size: 2.3rem;
+                font-size: 3.4rem;
+            }
+            
+            .calculation-card {
+                padding: 28px 25px;
+            }
+            
+            .intro-text {
+                padding: 30px 25px;
+                font-size: 1.15rem;
             }
         }
         
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 2.2s infinite;
+            box-shadow: 0 0 0 0 rgba(26, 42, 108, 0.4);
         }
         
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(74, 100, 145, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(74, 100, 145, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(74, 100, 145, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(26, 42, 108, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(26, 42, 108, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 42, 108, 0); }
         }
         
         .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
+            animation: fadeIn 0.9s ease-out forwards;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        .card-appear {
+            animation: cardAppear 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes cardAppear {
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        .cosmic-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.07) 0%, transparent 25%),
+                radial-gradient(circle at 30% 70%, rgba(255,215,0,0.05) 0%, transparent 30%),
+                radial-gradient(circle at 70% 30%, rgba(106, 17, 203, 0.08) 0%, transparent 35%);
+            z-index: -1;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
+    <div class="cosmic-bg"></div>
     <div class="container">
         <header>
-            <h1>🔮 Нумерологический калькулятор</h1>
-            <p class="subtitle">Полный анализ вашей нумерологической карты на основе даты рождения и полного имени. Получите более 30 расчетов с подробными интерпретациями.</p>
+            <h1>✨ Нумерологический Анализ ✨</h1>
+            <p class="subtitle">Глубокое погружение в вашу нумерологическую карту: 32 уникальных расчета с детальными интерпретациями, раскрывающими суть вашей личности, предназначения и жизненного пути</p>
         </header>
         
         <div class="intro-text">
-            <p>Нумерология — это древняя наука о числах и их влиянии на нашу жизнь. Каждое число несет в себе особую вибрацию и смысл. Введите ваши данные, чтобы получить <span class="highlight">полный нумерологический анализ</span>, включающий основные расчеты, комплексные показатели и прогнозы.</p>
-            <p>Система использует <span class="highlight">пифагорейскую нумерологию</span> для анализа русских имен. Все расчеты соответствуют классическим методикам, описанным в авторитетных источниках.</p>
+            <p>Нумерология — это не просто наука о числах, а <span class="highlight">глубокая система самопознания</span>, позволяющая понять скрытые механизмы вашей жизни. Каждое число в вашей нумерологической карте раскрывает определенный аспект вашей личности, судьбы и потенциала.</p>
+            <p>Наш калькулятор использует <span class="highlight">пифагорейскую систему</span> для анализа русских имен и дат рождения. Все расчеты соответствуют классическим методикам, описанным в авторитетных источниках по систематизации нумерологических вычислений.</p>
+            <p>Мы учитываем <span class="highlight">мастер-числа (11, 22, 33)</span>, которые обладают особым вибрационным потенциалом и не сокращаются до однозначных значений. Каждая интерпретация написана экспертами и раскрывает глубинный смысл чисел в контексте конкретного расчета.</p>
         </div>
         
         <div class="calculator-container">
             <div class="input-section">
-                <h2>Ваши данные</h2>
-                <div class="form-group">
-                    <label for="birthdate">Дата рождения:</label>
-                    <input type="date" id="birthdate" required>
-                </div>
-                <div class="form-group">
-                    <label for="birthTime">Время рождения:</label>
-                    <input type="time" id="birthTime" required>
-                </div>
-                <div class="form-group">
-                    <label for="birthPlace">Место рождения:</label>
-                    <input type="text" id="birthPlace" placeholder="Город, страна" required>
-                </div>
-                <div class="form-group">
-                    <label for="fullName">Полное имя (ФИО):</label>
-                    <input type="text" id="fullName" placeholder="Иван Иванович Иванов" required>
+                <h2>Ваши персональные данные</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="birthdate">Дата рождения</label>
+                        <input type="date" id="birthdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthTime">Время рождения</label>
+                        <input type="time" id="birthTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthPlace">Место рождения</label>
+                        <input type="text" id="birthPlace" placeholder="Город, страна" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullName">Полное имя (ФИО)</label>
+                        <input type="text" id="fullName" placeholder="Иван Иванович Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="partnerBirthdate">Дата рождения партнера</label>
+                        <input type="date" id="partnerBirthdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="partnerName">Полное имя партнера (ФИО)</label>
+                        <input type="text" id="partnerName" placeholder="Мария Сергеевна Петрова" required>
+                    </div>
                 </div>
                 
-                <h2 style="margin-top: 35px">Данные партнера</h2>
-                <div class="form-group">
-                    <label for="partnerBirthdate">Дата рождения партнера:</label>
-                    <input type="date" id="partnerBirthdate" required>
-                </div>
-                <div class="form-group">
-                    <label for="partnerName">Полное имя партнера (ФИО):</label>
-                    <input type="text" id="partnerName" placeholder="Мария Сергеевна Петрова" required>
-                </div>
-                
-                <button type="button" id="calculateBtn" class="pulse">Рассчитать нумерологию</button>
+                <button type="button" id="calculateBtn" class="pulse">РАССЧИТАТЬ НУМЕРОЛОГИЧЕСКУЮ КАРТУ</button>
             </div>
             
             <div class="results-section">
-                <h2>Ваши нумерологические расчеты</h2>
+                <h2>Ваша нумерологическая карта</h2>
                 <div id="resultsContainer" class="results-container">
                     <!-- Результаты будут добавлены сюда через JavaScript -->
                 </div>
             </div>
         </div>
         
-        <h2 class="section-title">Как это работает</h2>
+        <h2 class="section-title">Философия расчетов</h2>
         <div class="intro-text">
-            <p>Наш калькулятор выполняет <span class="highlight">32 уникальных расчета</span>, основанных на классических нумерологических системах. Алгоритмы расчетов соответствуют методикам, описанным в научных работах по систематизации нумерологических вычислений.</p>
-            <p>Мы используем <span class="highlight">пифагорейскую систему</span> для преобразования букв в числа. Каждая буква русского алфавита имеет числовое значение от 1 до 9. Все расчеты выполняются с учетом мастер-чисел (11, 22, 33), которые не сокращаются до однозначных значений из-за их особой энергетической значимости.</p>
-            <p>Результаты включают как базовые характеристики (Число Жизненного Пути, Число Судьбы), так и комплексные показатели (Число Развития, Число Партнерства), а также прогнозы на текущий год.</p>
+            <p>Наш подход основан на <span class="highlight">иерархической системе</span> нумерологических вычислений. Мы начинаем с фундаментальных ядер (Число Жизненного Пути и Число Судьбы), которые формируют основу вашей личности. Затем мы анализируем производные характеристики (Число Души, Лица, Развития), раскрывающие внутренние мотивы и внешние проявления.</p>
+            <p>Далее следуют <span class="highlight">интегративные показатели</span> (Число Личного Года, Партнерства), которые добавляют динамику и контекст вашей текущей жизненной ситуации. Завершает систему ведическая нумерология с ее уникальными концепциями (Мула-анка, Бхагянка), предлагающая космологический взгляд на вашу судьбу.</p>
+            <p>Каждое число в вашей карте — это не просто цифра, а <span class="highlight">живой архетип</span>, несущий глубокий смысл. Наши интерпретации помогут вам понять не только "что" означает число, но и "почему" оно проявляется в вашей жизни именно так, и "как" вы можете использовать этот потенциал для личностного роста и гармонизации своей судьбы.</p>
         </div>
         
         <footer>
-            <p>Нумерологический калькулятор © 2026 | Все расчеты основаны на классических методиках пифагорейской нумерологии</p>
+            <p>Нумерологический калькулятор © 2026 | Все расчеты основаны на классических методиках пифагорейской и ведической нумерологии</p>
             <p>Систематизация нумерологических расчетов: Алгоритмы, данные и интерпретации</p>
+            <p style="margin-top: 8px; font-size: 0.95rem; opacity: 0.85;">Расчеты носят информационный характер и являются инструментом для самопознания и личностного развития</p>
         </footer>
     </div>
 
@@ -565,79 +736,149 @@
             function formatDate(dateString) {
                 const date = new Date(dateString);
                 const day = date.getDate();
-                const month = date.toLocaleString('ru-RU', { month: 'long' });
+                const monthNames = ["января", "февраля", "марта", "апреля", "мая", "июня",
+                    "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+                const month = monthNames[date.getMonth()];
                 const year = date.getFullYear();
                 return `${day} ${month} ${year} года`;
             }
             
-            // Функция для получения описания числа
-            function getNumberDescription(number, calculationType) {
-                const descriptions = {
-                    lifePath: {
-                        1: "Лидерство, независимость, инициативность. Вы прирожденный лидер, который любит быть первым и брать на себя ответственность.",
-                        2: "Дипломатия, сотрудничество, чувствительность. Вы обладаете даром примирять конфликты и находить компромиссы.",
-                        3: "Творчество, оптимизм, самовыражение. Вы обаятельны, общительны и обладаете ярким творческим потенциалом.",
-                        4: "Стабильность, практичность, трудолюбие. Вы надежны, организованны и цените порядок во всем.",
-                        5: "Свобода, приключения, адаптивность. Вы любите перемены, путешествия и стремитесь к разнообразию в жизни.",
-                        6: "Гармония, ответственность, забота. Вы обладаете сильным чувством долга и стремитесь к гармонии в отношениях.",
-                        7: "Анализ, мудрость, интуиция. Вы глубокий мыслитель с развитой интуицией и стремлением к знаниям.",
-                        8: "Власть, амбиции, материальный успех. Вы обладаете деловой хваткой и стремитесь к финансовой независимости.",
-                        9: "Гуманизм, сострадание, завершение. Вы идеалист с широким кругозором и стремлением служить человечеству.",
-                        11: "Интуиция, вдохновение, духовность. Вы обладаете мощным интуитивным даром и способны вдохновлять других.",
-                        22: "Мастер-строитель, практичная мудрость. Вы способны воплощать грандиозные идеи в реальность и создавать долговечные структуры.",
-                        33: "Мастер-учитель, безусловная любовь. Вы обладаете даром исцеления и способны нести свет и любовь в мир."
-                    },
-                    destiny: {
-                        1: "Ваша судьба связана с лидерством и независимостью. Вы призваны прокладывать новые пути и вдохновлять других своей силой воли.",
-                        2: "Ваша судьба — быть посредником и дипломатом. Вы способны создавать гармонию в отношениях и помогать другим находить общий язык.",
-                        3: "Ваша судьба связана с творчеством и самовыражением. Вы призваны радовать мир своим талантом и оптимизмом.",
-                        4: "Ваша судьба — создавать прочный фундамент. Вы призваны трудиться усердно и создавать стабильность для себя и других.",
-                        5: "Ваша судьба — быть свободным исследователем. Вы призваны пробовать новое, адаптироваться к изменениям и вдохновлять других на перемены.",
-                        6: "Ваша судьба связана с ответственностью и заботой. Вы призваны создавать гармонию в семье и обществе, помогая нуждающимся.",
-                        7: "Ваша судьба — искать истину и мудрость. Вы призваны развивать интеллект и интуицию, делясь знаниями с другими.",
-                        8: "Ваша судьба связана с материальным успехом и властью. Вы призваны управлять ресурсами и создавать процветание.",
-                        9: "Ваша судьба — служить человечеству. Вы призваны проявлять сострадание и помогать миру стать лучше.",
-                        11: "Ваша судьба — быть духовным проводником. Вы призваны вдохновлять других и нести свет в темные места.",
-                        22: "Ваша судьба — быть мастером-строителем. Вы призваны воплощать грандиозные идеи, которые изменят мир к лучшему.",
-                        33: "Ваша судьба — быть учителем и целителем. Вы призваны нести безусловную любовь и исцелять других своим присутствием."
-                    },
-                    soul: {
-                        1: "Ваша душа стремится к независимости и лидерству. Вы хотите быть первым и иметь контроль над своей жизнью.",
-                        2: "Ваша душа жаждет гармонии и партнерства. Вы хотите чувствовать себя нужным и быть в близких отношениях с другими.",
-                        3: "Ваша душа стремится к радости и самовыражению. Вы хотите творить, веселиться и вдохновлять других.",
-                        4: "Ваша душа жаждет стабильности и порядка. Вы хотите создать прочный фундамент и жить предсказуемой жизнью.",
-                        5: "Ваша душа стремится к свободе и приключениям. Вы хотите испытать все радости жизни и никогда не останавливаться на достигнутом.",
-                        6: "Ваша душа жаждет любви и гармонии. Вы хотите заботиться о близких и создавать уют в семье.",
-                        7: "Ваша душа стремится к знаниям и пониманию. Вы хотите проникнуть в суть вещей и обрести мудрость.",
-                        8: "Ваша душа жаждет власти и материального успеха. Вы хотите быть финансово независимым и влиятельным.",
-                        9: "Ваша душа стремится к служению и состраданию. Вы хотите сделать мир лучше и помочь как можно большему числу людей.",
-                        11: "Ваша душа жаждет духовного пробуждения. Вы хотите вдохновлять других и нести свет в мир.",
-                        22: "Ваша душа стремится к воплощению великих идей. Вы хотите создавать что-то значимое и долговечное.",
-                        33: "Ваша душа жаждет безусловной любви и исцеления. Вы хотите помогать другим и нести свет в темные места."
-                    },
-                    personality: {
-                        1: "Вы производите впечатление лидера и независимого человека. Люди видят в вас силу, уверенность и решительность.",
-                        2: "Вы производите впечатление дипломата и миротворца. Люди видят в вас тактичность, деликатность и умение слушать.",
-                        3: "Вы производите впечатление обаятельного и творческого человека. Люди видят в вас оптимизм, жизнерадостность и харизму.",
-                        4: "Вы производите впечатление надежного и практичного человека. Люди видят в вас стабильность, организованность и трудолюбие.",
-                        5: "Вы производите впечатление свободолюбивого и энергичного человека. Люди видят в вас адаптивность, любознательность и харизму.",
-                        6: "Вы производите впечатление заботливого и ответственного человека. Люди видят в вас надежность, гармоничность и чувство долга.",
-                        7: "Вы производите впечатление загадочного и мудрого человека. Люди видят в вас глубину, интеллект и интуицию.",
-                        8: "Вы производите впечатление амбициозного и авторитетного человека. Люди видят в вас деловую хватку, уверенность и практичность.",
-                        9: "Вы производите впечатление благородного и гуманного человека. Люди видят в вас щедрость, сострадание и широкий кругозор.",
-                        11: "Вы производите впечатление вдохновляющего и интуитивного человека. Люди видят в вас духовность, харизму и необычные способности.",
-                        22: "Вы производите впечатление практичного визионера. Люди видят в вас мудрость, надежность и способность воплощать грандиозные идеи.",
-                        33: "Вы производите впечатление заботливого учителя. Люди видят в вас доброту, мудрость и исцеляющую энергию."
-                    }
-                };
+            // Глубокие интерпретации для каждого типа расчета и числа
+            const interpretations = {
+                lifePath: {
+                    1: "Число Жизненного Пути 1 указывает на путь лидера и новатора. Ваша душа пришла в этот мир, чтобы научиться независимости, инициативности и самодостаточности. Вы призваны прокладывать новые пути, а не следовать чужим. Ваша главная задача — развить уверенность в себе и научиться брать на себя ответственность за свою жизнь, не ожидая помощи от других. В отношениях вам важно сохранять личную свободу, но при этом учиться сотрудничеству. Кармический урок этого числа — преодоление эгоцентризма и развитие щедрости.",
+                    2: "Число Жизненного Пути 2 раскрывает путь дипломата и посредника. Ваша душа стремится к гармонии, партнерству и сотрудничеству. Вы обладаете тонкой интуицией и способностью чувствовать настроения других людей. Ваша главная задача — научиться доверять своему внутреннему голосу и не жертвовать своими потребностями ради других. В отношениях вы ищете глубокой эмоциональной связи, но должны остерегаться чрезмерной зависимости. Кармический урок этого числа — обрести внутреннюю опору и научиться устанавливать здоровые границы.",
+                    3: "Число Жизненного Пути 3 указывает на путь творческого самовыражения и радости. Ваша душа пришла в этот мир, чтобы научиться оптимизму, вдохновлять других и выражать свою уникальность. Вы обладаете природным обаянием и способностью видеть красоту в обыденном. Ваша главная задача — преодолеть страх критики и позволить своему творчеству течь свободно. В отношениях вы ищете веселья и легкости, но должны учиться глубине и последовательности. Кармический урок этого числа — направить свою энергию на создание чего-то долговечного, а не только на мимолетные удовольствия.",
+                    4: "Число Жизненного Пути 4 раскрывает путь строителя и организатора. Ваша душа стремится к стабильности, порядку и практичности. Вы призваны создавать прочные основы во всех сферах жизни — в карьере, отношениях и личном развитии. Ваша главная задача — научиться терпению и дисциплине, понимая, что истинные достижения требуют времени и упорного труда. В отношениях вы ищете надежности и преданности, но должны остерегаться излишнего консерватизма. Кармический урок этого числа — найти баланс между структурой и гибкостью, научившись адаптироваться к изменениям.",
+                    5: "Число Жизненного Пути 5 указывает на путь свободы и приключений. Ваша душа пришла в этот мир, чтобы испытать разнообразие жизни и научиться адаптивности. Вы обладаете любознательностью, харизмой и способностью быстро приспосабливаться к новым условиям. Ваша главная задача — направить свою жажду свободы в конструктивное русло, не разрушая важные связи и обязательства. В отношениях вы цените независимость, но должны учиться стабильности и глубине привязанности. Кармический урок этого числа — понять, что истинная свобода приходит через ответственность, а не через избегание обязательств.",
+                    6: "Число Жизненного Пути 6 раскрывает путь ответственности и заботы. Ваша душа стремится к гармонии в семье и обществе, неся в мир любовь и сострадание. Вы призваны служить другим, но при этом не терять себя. Ваша главная задача — научиться здоровому балансу между заботой о других и заботой о себе. В отношениях вы ищете глубокой эмоциональной связи и готовы на многое ради близких, но должны остерегаться жертвенности и контроля. Кармический урок этого числа — понять, что вы не можете заботиться о других, если не заботитесь о себе.",
+                    7: "Число Жизненного Пути 7 указывает на путь искателя истины и мудрости. Ваша душа пришла в этот мир, чтобы развить интеллект, интуицию и духовное понимание. Вы обладаете аналитическим умом и способностью видеть скрытые закономерности. Ваша главная задача — преодолеть склонность к изоляции и научиться делиться своими знаниями с другими. В отношениях вы ищете глубокой интеллектуальной и духовной связи, но должны учиться открытости и уязвимости. Кармический урок этого числа — найти баланс между умом и сердцем, поняв, что истинная мудрость приходит через опыт, а не только через анализ.",
+                    8: "Число Жизненного Пути 8 раскрывает путь материального успеха и власти. Ваша душа стремится к достижению баланса между материальным и духовным, учась управлять ресурсами мудро. Вы призваны развить деловую хватку и лидерские качества, но при этом не потерять человечность. Ваша главная задача — преодолеть страх неудачи и научиться видеть возможности в кризисах. В отношениях вы ищете партнера, который разделяет ваши амбиции, но должны остерегаться превращения отношений в транзакцию. Кармический урок этого числа — понять, что истинная власть приходит через служение другим, а не через контроль над ними.",
+                    9: "Число Жизненного Пути 9 указывает на путь гуманизма и завершения. Ваша душа пришла в этот мир, чтобы развить сострадание, щедрость и глобальное видение. Вы обладаете идеализмом и способностью видеть лучшее в людях. Ваша главная задача — научиться отпускать прошлое и не нести на себе груз чужих проблем. В отношениях вы ищете глубокой духовной связи, но должны остерегаться мученичества и неоправданных жертв. Кармический урок этого числа — понять, что для того, чтобы служить миру, вы должны сначала обрести внутреннюю гармонию.",
+                    11: "Мастер-число Жизненного Пути 11 указывает на путь духовного вдохновителя и интуита. Ваша душа обладает мощным психическим потенциалом и способностью видеть за пределы материального мира. Вы призваны нести свет в темные места и вдохновлять других своим примером. Ваша главная задача — научиться управлять своей чувствительностью и не бояться своего дара. В отношениях вы ищете глубокой духовной связи, но должны остерегаться иллюзий и разочарований. Кармический урок этого числа — доверять своей интуиции даже тогда, когда логика противится, и использовать свой дар для служения высшему благу.",
+                    22: "Мастер-число Жизненного Пути 22 указывает на путь Мастера-Строителя. Ваша душа обладает уникальной способностью воплощать грандиозные идеи в материальную реальность. Вы призваны создавать структуры, которые будут служить человечеству долгие годы. Ваша главная задача — преодолеть страх перед масштабом своих возможностей и научиться работать с материальным миром как с инструментом для духовных целей. В отношениях вы ищете партнера, который разделяет ваше видение, но должны остерегаться превращения близких в 'проекты'. Кармический урок этого числа — понять, что истинная мощь приходит через служение, а не через контроль.",
+                    33: "Мастер-число Жизненного Пути 33 указывает на путь Мастера-Учителя и целителя. Ваша душа несет в мир энергию безусловной любви и сострадания. Вы призваны исцелять других своим присутствием и учить через пример. Ваша главная задача — научиться принимать свою уникальную миссию и не прятаться за скромностью. В отношениях вы ищете глубокой духовной связи, но должны остерегаться жертвенности и эмоционального выгорания. Кармический урок этого числа — понять, что для того, чтобы нести свет другим, вы должны сначала наполнить себя любовью."
+                },
+                destiny: {
+                    1: "Число Судьбы 1 указывает на предназначение лидера и новатора. Ваша душа пришла в этот мир, чтобы проявить независимость, инициативность и оригинальность мышления. Вы обладаете врожденной способностью брать на себя ответственность и вдохновлять других своим примером. Ваш жизненный путь требует от вас смелости быть первым, пробивать новые пути и не бояться одиночества в принятии решений. Кармически важно научиться использовать свою силу воли для созидания, а не для доминирования, и развить щедрость в отношениях с другими.",
+                    2: "Число Судьбы 2 раскрывает предназначение дипломата и посредника. Ваша душа стремится к гармонии, сотрудничеству и созданию равновесия в отношениях. Вы обладаете тонкой интуицией и способностью чувствовать скрытые мотивы людей. Ваш жизненный путь требует от вас развития терпения, тактичности и умения работать в команде. Кармически важно научиться доверять своему внутреннему голосу, устанавливать здоровые границы и не жертвовать своими потребностями ради других.",
+                    3: "Число Судьбы 3 указывает на предназначение творца и вдохновителя. Ваша душа пришла в этот мир, чтобы выражать радость, оптимизм и творческий потенциал. Вы обладаете природным обаянием, коммуникабельностью и способностью видеть красоту в обыденном. Ваш жизненный путь требует от вас смелости самовыражения, преодоления страха критики и развития дисциплины в творчестве. Кармически важно научиться направлять свою энергию на создание чего-то долговечного, а не только на мимолетные удовольствия.",
+                    4: "Число Судьбы 4 раскрывает предназначение строителя и организатора. Ваша душа стремится к созданию прочных основ во всех сферах жизни. Вы обладаете практичностью, надежностью и способностью к упорному труду. Ваш жизненный путь требует от вас развития терпения, дисциплины и внимания к деталям. Кармически важно научиться гибкости, адаптироваться к изменениям и не превращать структуру в тюрьму для себя и других.",
+                    5: "Число Судьбы 5 указывает на предназначение свободного исследователя и адаптатора. Ваша душа пришла в этот мир, чтобы испытать разнообразие жизни и научиться гибкости. Вы обладаете любознательностью, харизмой и способностью быстро приспосабливаться к новым условиям. Ваш жизненный путь требует от вас смелости выходить из зоны комфорта, но при этом не разрушать важные связи. Кармически важно научиться ответственности, поняв, что истинная свобода приходит через осознанный выбор, а не через избегание обязательств.",
+                    6: "Число Судьбы 6 раскрывает предназначение заботливого наставника и гармонизатора. Ваша душа стремится к созданию красоты, любви и баланса в семье и обществе. Вы обладаете чувством ответственности, состраданием и эстетическим вкусом. Ваш жизненный путь требует от вас развития здорового баланса между заботой о других и заботой о себе. Кармически важно научиться не контролировать других и не превращать заботу в манипуляцию.",
+                    7: "Число Судьбы 7 указывает на предназначение искателя истины и мудреца. Ваша душа пришла в этот мир, чтобы развить интеллект, интуицию и духовное понимание. Вы обладаете аналитическим умом, способностью к глубокому анализу и интересом к тайнам бытия. Ваш жизненный путь требует от вас смелости задавать сложные вопросы и делиться знаниями с другими. Кармически важно научиться балансу между умом и сердцем, поняв, что истинная мудрость приходит через опыт, а не только через анализ.",
+                    8: "Число Судьбы 8 раскрывает предназначение управленца и материального магната. Ваша душа стремится к достижению баланса между материальным и духовным, учась мудро управлять ресурсами. Вы обладаете деловой хваткой, амбициями и способностью видеть возможности там, где другие видят препятствия. Ваш жизненный путь требует от вас развития честности, справедливости и щедрости. Кармически важно научиться использовать власть для служения другим, а не для личного обогащения.",
+                    9: "Число Судьбы 9 указывает на предназначение гуманиста и завершителя циклов. Ваша душа пришла в этот мир, чтобы развить сострадание, щедрость и глобальное видение. Вы обладаете идеализмом, творческими способностями и способностью видеть лучшее в людях. Ваш жизненный путь требует от вас смелости отпускать прошлое и не нести на себе груз чужих проблем. Кармически важно научиться здоровому эгоизму и понять, что для того, чтобы служить миру, вы должны сначала обрести внутреннюю гармонию.",
+                    11: "Мастер-число Судьбы 11 указывает на предназначение духовного вдохновителя и интуита. Ваша душа обладает мощным психическим потенциалом и способностью видеть за пределы материального мира. Вы призваны нести свет в темные места и вдохновлять других своим примером. Ваш жизненный путь требует от вас смелости доверять своей интуиции даже тогда, когда логика противится. Кармически важно научиться управлять своей чувствительностью и использовать свой дар для служения высшему благу, а не для личной выгоды.",
+                    22: "Мастер-число Судьбы 22 указывает на предназначение Мастера-Строителя. Ваша душа обладает уникальной способностью воплощать грандиозные идеи в материальную реальность. Вы призваны создавать структуры, которые будут служить человечеству долгие годы. Ваш жизненный путь требует от вас смелости мыслить масштабно и работать с материальным миром как с инструментом для духовных целей. Кармически важно научиться смирению и понять, что истинная мощь приходит через служение, а не через контроль.",
+                    33: "Мастер-число Судьбы 33 указывает на предназначение Мастера-Учителя и целителя. Ваша душа несет в мир энергию безусловной любви и сострадания. Вы призваны исцелять других своим присутствием и учить через пример. Ваш жизненный путь требует от вас смелости принимать свою уникальную миссию и не прятаться за скромностью. Кармически важно научиться наполнять себя любовью, чтобы иметь возможность делиться ею с другими, и не превращать заботу в жертвенность."
+                },
+                soul: {
+                    1: "Число Души 1 раскрывает глубинное стремление к независимости, лидерству и самореализации. Внутренне вы жаждете быть первым, иметь контроль над своей жизнью и проявлять свою уникальность. Ваша душа ищет признания своих достижений и возможности проявить инициативу. Кармически важно научиться использовать эту энергию для созидания, а не для доминирования, и развить щедрость в отношениях с другими. Истинное удовлетворение вы найдете, когда научитесь вести за собой, вдохновляя других, а не принуждая их следовать за вами.",
+                    2: "Число Души 2 указывает на глубинную потребность в гармонии, партнерстве и эмоциональной близости. Внутренне вы стремитесь к сотрудничеству, поддержке и созданию равновесия в отношениях. Ваша душа ищет глубоких эмоциональных связей и боится конфликтов и одиночества. Кармически важно научиться доверять своему внутреннему голосу, устанавливать здоровые границы и не жертвовать своими потребностями ради других. Истинное удовлетворение вы найдете, когда обретете внутреннюю опору и научитесь быть в отношениях, не теряя себя.",
+                    3: "Число Души 3 раскрывает глубинное стремление к радости, самовыражению и творчеству. Внутренне вы жаждете веселья, общения и возможности выражать свою уникальность. Ваша душа ищет вдохновения, красоты и оптимизма в жизни. Кармически важно научиться направлять свою энергию на создание чего-то долговечного, а не только на мимолетные удовольствия, и развить дисциплину в творчестве. Истинное удовлетворение вы найдете, когда позволите своему творчеству течь свободно, не боясь критики и осуждения.",
+                    4: "Число Души 4 указывает на глубинную потребность в стабильности, порядке и безопасности. Внутренне вы стремитесь к предсказуемости, надежности и прочным основам во всех сферах жизни. Ваша душа ищет уверенности в завтрашнем дне и боится хаоса и неопределенности. Кармически важно научиться гибкости, адаптироваться к изменениям и не превращать структуру в тюрьму для себя и других. Истинное удовлетворение вы найдете, когда создадите баланс между стабильностью и спонтанностью, поняв, что некоторые из лучших моментов жизни случаются вне плана.",
+                    5: "Число Души 5 раскрывает глубинное стремление к свободе, приключениям и разнообразию. Внутренне вы жаждете новых впечатлений, путешествий и возможности испытать все радости жизни. Ваша душа ищет стимуляции, перемен и боится рутины и ограничений. Кармически важно научиться ответственности, поняв, что истинная свобода приходит через осознанный выбор, а не через избегание обязательств. Истинное удовлетворение вы найдете, когда направите свою жажду свободы в конструктивное русло, создавая жизнь, полную приключений, но при этом имеющую глубокий смысл.",
+                    6: "Число Души 6 указывает на глубинную потребность в любви, гармонии и заботе о близких. Внутренне вы стремитесь к созданию уюта, красоты и эмоциональной безопасности в семье. Ваша душа ищет глубоких привязанностей и боится одиночества и конфликтов. Кармически важно научиться здоровому балансу между заботой о других и заботой о себе, и не превращать любовь в контроль. Истинное удовлетворение вы найдете, когда поймете, что для того, чтобы заботиться о других, вы должны сначала наполнить себя любовью.",
+                    7: "Число Души 7 раскрывает глубинное стремление к знаниям, мудрости и духовному пониманию. Внутренне вы жаждете проникнуть в суть вещей, понять тайны бытия и обрести внутреннюю истину. Ваша душа ищет уединения для размышлений и боится поверхностности и банальности. Кармически важно научиться балансу между умом и сердцем, поняв, что истинная мудрость приходит через опыт, а не только через анализ. Истинное удовлетворение вы найдете, когда научитесь делиться своими знаниями с другими, не превращаясь в отшельника.",
+                    8: "Число Души 8 указывает на глубинную потребность в власти, материальном успехе и признании достижений. Внутренне вы стремитесь к финансовой независимости, влиянию и возможности управлять ресурсами. Ваша душа ищет подтверждения своей компетентности и боится финансовой нестабильности. Кармически важно научиться использовать власть для служения другим, а не для личного обогащения, и развить щедрость. Истинное удовлетворение вы найдете, когда поймете, что истинное богатство измеряется не деньгами, а качеством ваших отношений и вкладом в мир.",
+                    9: "Число Души 9 раскрывает глубинное стремление к служению человечеству, состраданию и глобальному видению. Внутренне вы жаждете сделать мир лучше, помочь нуждающимся и оставить после себя наследие. Ваша душа ищет смысла в жизни и боится эгоизма и ограниченности мышления. Кармически важно научиться здоровому эгоизму и понять, что для того, чтобы служить миру, вы должны сначала обрести внутреннюю гармонию. Истинное удовлетворение вы найдете, когда направите свой идеализм на конкретные действия, не ожидая признания и благодарности.",
+                    11: "Мастер-число Души 11 указывает на глубинную потребность в духовном пробуждении, интуитивном понимании и вдохновении других. Внутренне вы стремитесь к связи с высшими силами, поиску истины и несению света в мир. Ваша душа ищет глубокого смысла и боится обыденности и материализма. Кармически важно научиться управлять своей чувствительностью, доверять своей интуиции и использовать свой дар для служения высшему благу. Истинное удовлетворение вы найдете, когда примете свою уникальную миссию и позволите себе быть проводником высших вибраций.",
+                    22: "Мастер-число Души 22 раскрывает глубинное стремление к воплощению грандиозных идей, созданию долговечных структур и служению человечеству через материальные достижения. Внутренне вы жаждете использовать свои таланты для решения глобальных проблем и создания наследия. Ваша душа ищет масштабных проектов и боится ограниченности мышления. Кармически важно научиться смирению, поняв, что истинная мощь приходит через служение, а не через контроль. Истинное удовлетворение вы найдете, когда направите свои амбиции на создание чего-то, что будет служить другим долгие годы.",
+                    33: "Мастер-число Души 33 указывает на глубинную потребность в безусловной любви, исцелении других и служении через сострадание. Внутренне вы стремитесь нести свет в темные места, исцелять раны других своим присутствием и учить через пример. Ваша душа ищет глубоких духовных связей и боится эгоизма и отчуждения. Кармически важно научиться наполнять себя любовью, чтобы иметь возможность делиться ею с другими, и не превращать заботу в жертвенность. Истинное удовлетворение вы найдете, когда примете свою роль целителя и учителя, не ожидая признания за свои усилия."
+                },
+                personality: {
+                    1: "Число Лица 1 создает впечатление лидера, новатора и независимой личности. Люди видят в вас уверенность, решительность и способность брать на себя ответственность. Вы производите впечатление человека, который знает, чего хочет, и не боится идти своим путем. В социальных ситуациях вы проявляете инициативу и часто становитесь центром внимания. Кармически важно научиться использовать эту энергию для вдохновения других, а не для доминирования, и развить щедрость в отношениях. Ваша внешняя сила должна служить выражением внутренней мудрости, а не компенсацией неуверенности.",
+                    2: "Число Лица 2 создает впечатление дипломата, миротворца и тактичного человека. Люди видят в вас деликатность, умение слушать и способность находить компромиссы. Вы производите впечатление человека, который ценит гармонию и сотрудничество. В социальных ситуациях вы проявляете тактичность и часто становитесь посредником в конфликтах. Кармически важно научиться устанавливать здоровые границы и не жертвовать своими потребностями ради других. Ваша внешняя мягкость должна сочетаться с внутренней силой, чтобы вы не становились жертвой манипуляций.",
+                    3: "Число Лица 3 создает впечатление обаятельного, творческого и оптимистичного человека. Люди видят в вас жизнерадостность, коммуникабельность и способность видеть хорошее в любой ситуации. Вы производите впечатление человека, который легко находит общий язык с другими и умеет поднять настроение. В социальных ситуациях вы проявляете харизму и часто становитесь душой компании. Кармически важно научиться глубине и последовательности, не превращая обаяние в маску для скрытия внутренних проблем. Ваша внешняя радость должна быть выражением подлинной внутренней гармонии.",
+                    4: "Число Лица 4 создает впечатление надежного, практичного и организованного человека. Люди видят в вас стабильность, трудолюбие и внимание к деталям. Вы производите впечатление человека, на которого можно положиться в любой ситуации. В социальных ситуациях вы проявляете серьезность и ответственность. Кармически важно научиться гибкости и не превращать практичность в ригидность. Ваша внешняя надежность должна сочетаться с внутренней способностью адаптироваться к изменениям, чтобы вы не становились заложником собственных правил.",
+                    5: "Число Лица 5 создает впечатление свободолюбивого, энергичного и адаптивного человека. Люди видят в вас любознательность, харизму и способность быстро приспосабливаться к новым условиям. Вы производите впечатление человека, который легко находит выход из любой ситуации и не боится перемен. В социальных ситуациях вы проявляете обаяние и часто становитесь центром притяжения. Кармически важно научиться ответственности и не превращать свободолюбие в непостоянство. Ваша внешняя адаптивность должна служить выражением внутренней мудрости, а не страха перед обязательствами.",
+                    6: "Число Лица 6 создает впечатление заботливого, ответственного и гармоничного человека. Люди видят в вас надежность, чувство долга и стремление к красоте. Вы производите впечатление человека, который ценит семью и готов поддержать близких. В социальных ситуациях вы проявляете тактичность и часто становитесь опорой для других. Кармически важно научиться здоровому балансу между заботой о других и заботой о себе, и не превращать ответственность в контроль. Ваша внешняя забота должна быть выражением подлинной любви, а не потребности в одобрении.",
+                    7: "Число Лица 7 создает впечатление загадочного, мудрого и интуитивного человека. Люди видят в вас глубину, интеллект и способность видеть скрытые закономерности. Вы производите впечатление человека, который предпочитает качество количеству в отношениях. В социальных ситуациях вы проявляете сдержанность и часто становитесь советчиком для других. Кармически важно научиться открытости и не превращать загадочность в отчуждение. Ваша внешняя глубина должна сочетаться с внутренней способностью к уязвимости, чтобы вы могли строить подлинные связи с другими.",
+                    8: "Число Лица 8 создает впечатление амбициозного, авторитетного и практичного человека. Люди видят в вас деловую хватку, уверенность и способность управлять ресурсами. Вы производите впечатление человека, который знает цену вещам и умеет достигать целей. В социальных ситуациях вы проявляете решительность и часто становитесь лидером. Кармически важно научиться щедрости и не превращать амбиции в жестокость. Ваша внешняя мощь должна служить выражением внутренней мудрости, а не компенсацией чувства неполноценности.",
+                    9: "Число Лица 9 создает впечатление благородного, гуманного и идеалистичного человека. Люди видят в вас щедрость, сострадание и широкий кругозор. Вы производите впечатление человека, который думает о благе общества и готов помочь нуждающимся. В социальных ситуациях вы проявляете тактичность и часто становитесь защитником слабых. Кармически важно научиться здоровому эгоизму и не превращать идеализм в мученичество. Ваша внешняя щедрость должна быть выражением внутренней гармонии, а не потребности в признании.",
+                    11: "Мастер-число Лица 11 создает впечатление вдохновляющего, интуитивного и духовного человека. Люди видят в вас харизму, необычные способности и связь с высшими силами. Вы производите впечатление человека, который несет в мир свет и надежду. В социальных ситуациях вы проявляете магнетизм и часто становитесь источником вдохновения для других. Кармически важно научиться управлять своей чувствительностью и не превращать духовность в уход от реальности. Ваша внешняя вдохновляющая энергия должна быть выражением подлинной внутренней мудрости.",
+                    22: "Мастер-число Лица 22 создает впечатление практичного визионера и надежного лидера. Люди видят в вас мудрость, способность воплощать грандиозные идеи и заботу о благе других. Вы производите впечатление человека, который мыслит масштабно, но при этом остается практичным. В социальных ситуациях вы проявляете спокойную уверенность и часто становитесь опорой для других. Кармически важно научиться смирению и не превращать лидерство в контроль. Ваша внешняя мощь должна служить выражением внутреннего служения.",
+                    33: "Мастер-число Лица 33 создает впечатление заботливого учителя и целителя. Люди видят в вас доброту, мудрость и исцеляющую энергию. Вы производите впечатление человека, который несет в мир любовь и сострадание. В социальных ситуациях вы проявляете теплоту и часто становитесь источником поддержки для других. Кармически важно научиться наполнять себя любовью, чтобы иметь возможность делиться ею с другими, и не превращать заботу в жертвенность. Ваша внешняя доброта должна быть выражением подлинной внутренней гармонии."
+                },
+                development: {
+                    1: "Число Развития 1 указывает на необходимость развить независимость, лидерские качества и уверенность в себе. Ваш жизненный путь требует от вас смелости брать на себя ответственность и не ждать помощи от других. Кармически важно научиться инициативности и самодостаточности, преодолев зависимость от чужого мнения. Этот путь развития поможет вам обрести внутреннюю силу и стать архитектором своей судьбы.",
+                    2: "Число Развития 2 указывает на необходимость развить дипломатичность, сотрудничество и эмоциональную чувствительность. Ваш жизненный путь требует от вас научиться работать в команде, устанавливать гармоничные отношения и доверять своей интуиции. Кармически важно преодолеть конфликтность и эгоцентризм, развив способность к компромиссам. Этот путь развития поможет вам обрести глубокие и значимые связи с другими людьми.",
+                    3: "Число Развития 3 указывает на необходимость развить творческое самовыражение, оптимизм и коммуникабельность. Ваш жизненный путь требует от вас научиться выражать свои чувства и идеи, не боясь критики и осуждения. Кармически важно преодолеть замкнутость и пессимизм, развив способность видеть хорошее в любой ситуации. Этот путь развития поможет вам обрести радость и вдохновение в повседневной жизни.",
+                    4: "Число Развития 4 указывает на необходимость развить практичность, дисциплину и надежность. Ваш жизненный путь требует от вас научиться создавать прочные основы во всех сферах жизни и работать усердно для достижения целей. Кармически важно преодолеть хаотичность и непостоянство, развив терпение и внимание к деталям. Этот путь развития поможет вам обрести стабильность и уверенность в завтрашнем дне.",
+                    5: "Число Развития 5 указывает на необходимость развить адаптивность, любознательность и смелость перемен. Ваш жизненный путь требует от вас научиться выходить из зоны комфорта и принимать изменения как возможность для роста. Кармически важно преодолеть страх неизвестности и ригидность, развив гибкость мышления. Этот путь развития поможет вам обрести свободу и разнообразие в жизни.",
+                    6: "Число Развития 6 указывает на необходимость развить чувство ответственности, заботу о близких и стремление к гармонии. Ваш жизненный путь требует от вас научиться балансировать между личными потребностями и заботой о других. Кармически важно преодолеть эгоизм и безразличие, развив сострадание и эстетическое восприятие. Этот путь развития поможет вам обрести глубокие и значимые отношения.",
+                    7: "Число Развития 7 указывает на необходимость развить интеллект, интуицию и духовное понимание. Ваш жизненный путь требует от вас научиться искать глубинный смысл в происходящем и доверять своему внутреннему голосу. Кармически важно преодолеть поверхностность и материализм, развив способность к глубокому анализу. Этот путь развития поможет вам обрести мудрость и внутреннюю гармонию.",
+                    8: "Число Развития 8 указывает на необходимость развить деловую хватку, финансовую грамотность и справедливость. Ваш жизненный путь требует от вас научиться управлять ресурсами мудро и видеть возможности там, где другие видят препятствия. Кармически важно преодолеть страх неудачи и несправедливость, развив честность и щедрость. Этот путь развития поможет вам обрести материальный успех и внутреннюю силу.",
+                    9: "Число Развития 9 указывает на необходимость развить сострадание, гуманизм и способность отпускать прошлое. Ваш жизненный путь требует от вас научиться видеть общее благо и служить высшим идеалам. Кармически важно преодолеть эгоизм и привязанность к материальному, развив щедрость и глобальное видение. Этот путь развития поможет вам обрести смысл жизни и внутреннюю свободу."
+                },
+                partnership: {
+                    1: "Число Партнерства 1 указывает на отношения, основанные на лидерстве, независимости и инициативности. В такой паре один из партнеров часто берет на себя роль лидера, а другой учится самостоятельности. Кармически важно научиться балансу между лидерством и сотрудничеством, не превращая отношения в борьбу за власть. Такие отношения помогают обоим партнерам развить уверенность в себе и научиться брать ответственность за свою жизнь.",
+                    2: "Число Партнерства 2 указывает на отношения, основанные на гармонии, сотрудничестве и эмоциональной близости. В такой паре партнеры дополняют друг друга и создают атмосферу доверия и поддержки. Кармически важно научиться устанавливать здоровые границы и не жертвовать своими потребностями ради других. Такие отношения помогают обоим партнерам развить дипломатичность и эмоциональную чувствительность.",
+                    3: "Число Партнерства 3 указывает на отношения, основанные на творчестве, радости и самовыражении. В такой паре царит атмосфера оптимизма, веселья и вдохновения. Кармически важно научиться глубине и последовательности, не превращая отношения в череду мимолетных удовольствий. Такие отношения помогают обоим партнерам раскрыть свой творческий потенциал и научиться выражать свои чувства.",
+                    4: "Число Партнерства 4 указывает на отношения, основанные на стабильности, надежности и практичности. В такой паре партнеры создают прочные основы для совместной жизни и ценят предсказуемость. Кармически важно научиться гибкости и не превращать стабильность в рутину. Такие отношения помогают обоим партнерам развить дисциплину и терпение, создавая долговечный союз.",
+                    5: "Число Партнерства 5 указывает на отношения, основанные на свободе, приключениях и разнообразии. В такой паре партнеры ценят независимость и вместе исследуют мир. Кармически важно научиться ответственности и не превращать свободу в непостоянство. Такие отношения помогают обоим партнерам развить адаптивность и смелость, но требуют осознанного подхода к обязательствам.",
+                    6: "Число Партнерства 6 указывает на отношения, основанные на любви, заботе и гармонии. В такой паре партнеры создают уютный дом и глубокую эмоциональную связь. Кармически важно научиться здоровому балансу между заботой о других и заботой о себе, и не превращать любовь в контроль. Такие отношения помогают обоим партнерам развить сострадание и чувство ответственности.",
+                    7: "Число Партнерства 7 указывает на отношения, основанные на интеллектуальной и духовной близости. В такой паре партнеры делятся глубокими мыслями и ищут истину вместе. Кармически важно научиться открытости и не превращать глубину в отчуждение. Такие отношения помогают обоим партнерам развить мудрость и интуицию, но требуют умения быть уязвимыми.",
+                    8: "Число Партнерства 8 указывает на отношения, основанные на материальном успехе, власти и амбициях. В такой паре партнеры поддерживают друг друга в достижении целей и управляют ресурсами вместе. Кармически важно научиться щедрости и не превращать отношения в транзакцию. Такие отношения помогают обоим партнерам развить деловую хватку и справедливость, но требуют баланса между материальным и духовным.",
+                    9: "Число Партнерства 9 указывает на отношения, основанные на гуманизме, сострадании и служении высшим идеалам. В такой паре партнеры объединены общими ценностями и стремлением сделать мир лучше. Кармически важно научиться здоровому эгоизму и не превращать идеализм в мученичество. Такие отношения помогают обоим партнерам развить щедрость и глобальное видение, но требуют заботы о собственных потребностях."
+                },
+                personalYear: {
+                    1: "Число Личного Года 1 указывает на начало нового цикла и время для новых начинаний. Это год для постановки целей, проявления инициативы и смелых шагов вперед. Кармически важно использовать эту энергию для создания прочного фундамента будущего успеха, не боясь быть первым и пробивать новые пути. Это время для личного роста, самореализации и обретения независимости.",
+                    2: "Число Личного Года 2 указывает на время для сотрудничества, партнерства и развития интуиции. Это год для налаживания отношений, поиска компромиссов и работы в команде. Кармически важно научиться терпению, дипломатичности и доверять своему внутреннему голосу. Это время для создания гармонии в отношениях и развития эмоциональной чувствительности.",
+                    3: "Число Личного Года 3 указывает на время для творческого самовыражения, общения и радости. Это год для реализации творческих проектов, расширения социальных связей и поиска вдохновения. Кармически важно научиться оптимизму, коммуникабельности и не бояться выражать свои чувства. Это время для раскрытия талантов и наслаждения жизнью.",
+                    4: "Число Личного Года 4 указывает на время для создания прочных основ, дисциплины и упорного труда. Это год для организации жизни, решения практических вопросов и построения стабильности. Кармически важно научиться терпению, ответственности и вниманию к деталям. Это время для закладки фундамента будущих достижений через усердный труд.",
+                    5: "Число Личного Года 5 указывает на время для перемен, свободы и приключений. Это год для выхода из зоны комфорта, путешествий и новых впечатлений. Кармически важно научиться адаптивности, смелости и не бояться перемен. Это время для личной трансформации, расширения горизонтов и обретения новой свободы.",
+                    6: "Число Личного Года 6 указывает на время для семьи, любви и гармонии. Это год для укрепления отношений, заботы о близких и создания уюта. Кармически важно научиться ответственности, состраданию и балансу между личными потребностями и заботой о других. Это время для глубоких эмоциональных связей и создания гармоничной домашней атмосферы.",
+                    7: "Число Личного Года 7 указывает на время дляintrospection, духовного роста и поиска истины. Это год для самоанализа, обучения и развития интуиции. Кармически важно научиться уединению, глубокому размышлению и доверять своему внутреннему голосу. Это время для обретения мудрости, духовного пробуждения и понимания глубинных законов жизни.",
+                    8: "Число Личного Года 8 указывает на время для материального успеха, власти и признания достижений. Это год для карьерного роста, финансовых вложений и управления ресурсами. Кармически важно научиться справедливости, щедрости и мудрому использованию власти. Это время для достижения материальных целей и обретения финансовой независимости.",
+                    9: "Число Личного Года 9 указывает на время для завершения циклов, отпускания прошлого и служения другим. Это год для подведения итогов, прощения и подготовки к новому началу. Кармически важно научиться щедрости, состраданию и не держаться за то, что уже выполнило свою миссию. Это время для духовного роста, служения высшим идеалам и подготовки к новому циклу."
+                }
+            };
+            
+            // Функция для получения интерпретации
+            function getInterpretation(number, calculationType) {
+                // Определяем тип расчета на основе названия
+                let type = 'default';
                 
-                // Возвращаем описание для типа расчета и числа, или общее описание
-                if (descriptions[calculationType] && descriptions[calculationType][number]) {
-                    return descriptions[calculationType][number];
+                if (calculationType.includes('Жизненного Пути') || calculationType.includes('Партнера')) {
+                    type = 'lifePath';
+                } else if (calculationType.includes('Судьбы')) {
+                    type = 'destiny';
+                } else if (calculationType.includes('Души')) {
+                    type = 'soul';
+                } else if (calculationType.includes('Лица')) {
+                    type = 'personality';
+                } else if (calculationType.includes('Развития') || calculationType.includes('Кармических Уроков')) {
+                    type = 'development';
+                } else if (calculationType.includes('Партнерства') || calculationType.includes('Совместимости')) {
+                    type = 'partnership';
+                } else if (calculationType.includes('Личного Года')) {
+                    type = 'personalYear';
                 }
                 
-                // Общее описание для других расчетов
-                return `Число ${number} в этом расчете указывает на особые качества и потенциал, связанные с этой сферой жизни.`;
+                // Возвращаем интерпретацию, если она существует
+                if (interpretations[type] && interpretations[type][number]) {
+                    return interpretations[type][number];
+                }
+                
+                // Общая интерпретация для других случаев
+                const generalInterpretations = {
+                    1: "Это число символизирует начало, лидерство и независимость. В контексте данного расчета оно указывает на необходимость проявить инициативу, взять на себя ответственность и доверять своей уникальности. Кармически важно научиться использовать эту энергию для созидания, а не для доминирования.",
+                    2: "Это число символизирует партнерство, гармонию и дипломатию. В контексте данного расчета оно указывает на важность сотрудничества, интуиции и эмоциональной чувствительности. Кармически важно научиться устанавливать здоровые границы и не жертвовать своими потребностями ради других.",
+                    3: "Это число символизирует творчество, самовыражение и радость. В контексте данного расчета оно указывает на необходимость раскрыть свой творческий потенциал, общаться с другими и находить оптимизм в любой ситуации. Кармически важно научиться направлять свою энергию на создание чего-то долговечного.",
+                    4: "Это число символизирует стабильность, порядок и трудолюбие. В контексте данного расчета оно указывает на важность создания прочных основ, дисциплины и практичности. Кармически важно научиться гибкости и не превращать структуру в тюрьму для себя и других.",
+                    5: "Это число символизирует свободу, перемены и адаптивность. В контексте данного расчета оно указывает на необходимость выйти из зоны комфорта, принять изменения и исследовать новые горизонты. Кармически важно научиться ответственности и понять, что истинная свобода приходит через осознанный выбор.",
+                    6: "Это число символизирует любовь, гармонию и ответственность. В контексте данного расчета оно указывает на важность заботы о близких, создания красоты и баланса в отношениях. Кармически важно научиться здоровому балансу между заботой о других и заботой о себе.",
+                    7: "Это число символизирует мудрость, анализ и духовность. В контексте данного расчета оно указывает на необходимость искать глубинный смысл, развивать интуицию и доверять своему внутреннему голосу. Кармически важно научиться балансу между умом и сердцем.",
+                    8: "Это число символизирует власть, материальный успех и справедливость. В контексте данного расчета оно указывает на важность мудрого управления ресурсами, честности и щедрости. Кармически важно научиться использовать власть для служения другим, а не для личного обогащения.",
+                    9: "Это число символизирует завершение, сострадание и гуманизм. В контексте данного расчета оно указывает на необходимость отпустить прошлое, служить высшим идеалам и развить глобальное видение. Кармически важно научиться здоровому эгоизму и понять, что для того, чтобы служить миру, нужно сначала обрести внутреннюю гармонию.",
+                    11: "Это мастер-число символизирует духовное пробуждение, интуицию и вдохновение. В контексте данного расчета оно указывает на мощный психический потенциал и способность видеть за пределы материального мира. Кармически важно научиться управлять своей чувствительностью и использовать свой дар для служения высшему благу.",
+                    22: "Это мастер-число символизирует воплощение грандиозных идей и создание долговечных структур. В контексте данного расчета оно указывает на уникальную способность превращать мечты в реальность. Кармически важно научиться смирению и понять, что истинная мощь приходит через служение, а не через контроль.",
+                    33: "Это мастер-число символизирует безусловную любовь, исцеление и служение через сострадание. В контексте данного расчета оно указывает на миссию целителя и учителя. Кармически важно научиться наполнять себя любовью, чтобы иметь возможность делиться ею с другими, и не превращать заботу в жертвенность."
+                };
+                
+                return generalInterpretations[number] || `Число ${number} в этом расчете указывает на особые качества и потенциал, связанные с этой сферой жизни. Для глубокого понимания рекомендуется изучить нумерологические аспекты этого числа в контексте вашего личного пути.`;
             }
             
             // Обработчик кнопки расчета
@@ -751,193 +992,225 @@
                         title: "1. Число Жизненного Пути",
                         value: lifePath,
                         description: "Самая важная характеристика человека, его «код жизни». Раскрывает основную цель существования, ключевые уроки и общие черты характера, присущие человеку на протяжении всей жизни.",
-                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}): ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lifePath}`
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}): ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lifePath}`,
+                        type: "lifePath"
                     },
                     {
                         title: "2. Число Дня Рождения",
                         value: birthDayNumber,
                         description: "Отражает внутренний потенциал, скрытые таланты и ту энергию, которую человек приносит с собой в этот мир. Указывает на качества, которые человек проявляет в первую очередь.",
-                        calculation: `Сложение цифр дня рождения (${birthDay}): ${birthDay > 9 ? `${Math.floor(birthDay/10)} + ${birthDay%10} = ` : ''}${birthDayNumber}`
+                        calculation: `Сложение цифр дня рождения (${birthDay}): ${birthDay > 9 ? `${Math.floor(birthDay/10)} + ${birthDay%10} = ` : ''}${birthDayNumber}`,
+                        type: "birthDay"
                     },
                     {
                         title: "3. Число Судьбы (Выражения)",
                         value: destinyNumber,
                         description: "Раскрывает врожденные таланты, способности, карьерные предпочтения и тот потенциал, который человек может реализовать в жизни. Ключ к пониманию своего предназначения.",
-                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${destinyNumber}`
+                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${destinyNumber}`,
+                        type: "destiny"
                     },
                     {
                         title: "4. Число Души (Уржана)",
                         value: soulNumber,
                         description: "Раскрывает внутренние желания, страсти, скрытые мотивы и то, чего на самом деле хочет человек изнутри. Отвечает на вопрос: «Чего на самом деле хочет ваша душа?»",
-                        calculation: `Сумма числовых значений гласных букв в имени "${fullName}": ${fullName.split('').filter(c => 'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c)).map(c => letterValues[c]).join(' + ')} = ${soulNumber}`
+                        calculation: `Сумма числовых значений гласных букв в имени "${fullName}": ${fullName.split('').filter(c => 'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c)).map(c => letterValues[c]).join(' + ')} = ${soulNumber}`,
+                        type: "soul"
                     },
                     {
                         title: "5. Число Лица (Экспрессии)",
                         value: personalityNumber,
                         description: "Характеризует внешнее поведение человека, его социальный имидж и то, как он представляется окружающим. Показывает ту «маску», которую человек «надевает» для мира.",
-                        calculation: `Сумма числовых значений согласных букв в имени "${fullName}": ${fullName.split('').filter(c => !'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c) && letterValues[c]).map(c => letterValues[c]).join(' + ')} = ${personalityNumber}`
+                        calculation: `Сумма числовых значений согласных букв в имени "${fullName}": ${fullName.split('').filter(c => !'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c) && letterValues[c]).map(c => letterValues[c]).join(' + ')} = ${personalityNumber}`,
+                        type: "personality"
                     },
                     {
                         title: "6. Число Развития",
                         value: developmentNumber,
                         description: "Указывает на жизненные вызовы, препятствия и области, где человеку необходимо развиваться. Помогает понять, над чем нужно работать для гармоничного становления личности.",
-                        calculation: `Число Жизненного Пути (${lifePath}) - Число Дня Рождения (${birthDayNumber}) = ${lifePath - birthDayNumber}${lifePath - birthDayNumber <= 0 ? ` + 9 = ${developmentNumber}` : ''} → ${developmentNumber}`
+                        calculation: `Число Жизненного Пути (${lifePath}) - Число Дня Рождения (${birthDayNumber}) = ${lifePath - birthDayNumber}${lifePath - birthDayNumber <= 0 ? ` + 9 = ${developmentNumber}` : ''} → ${developmentNumber}`,
+                        type: "development"
                     },
                     {
                         title: "7. Число Кармических Уроков",
                         value: karmicLessons,
                         description: "Указывает на те области, где человеку предстоит исправить ошибки и завершить незавершенные дела. Связано с идеей кармы и необходимостью проработать определенные качества.",
-                        calculation: `Рассчитывается как Число Развития: ${developmentNumber}`
+                        calculation: `Рассчитывается как Число Развития: ${developmentNumber}`,
+                        type: "karmicLessons"
                     },
                     {
                         title: "8. Число Внутренней Сущности",
                         value: innerEssence,
                         description: "Раскрывает тот внутренний мир человека, который остается скрытым даже от близких. Показывает глубинные аспекты личности, не проявляющиеся на поверхности.",
-                        calculation: `Сумма числовых значений всех букв имени, кроме первой и последней: "${fullName.substring(1, fullName.length-1)}" = ${innerEssence}`
+                        calculation: `Сумма числовых значений всех букв имени, кроме первой и последней: "${fullName.substring(1, fullName.length-1)}" = ${innerEssence}`,
+                        type: "innerEssence"
                     },
                     {
                         title: "9. Число Образа",
                         value: imageNumber,
                         description: "Показывает, каким человек видит самого себя, и помогает понять самооценку и представление о собственном предназначении.",
-                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${imageNumber}`
+                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${imageNumber}`,
+                        type: "image"
                     },
                     {
                         title: "10. Число Влияния",
                         value: influenceNumber,
                         description: "Указывает на тех людей, которые оказывают на человека наибольшее влияние в его жизни, а также на то, кто находится в его ближайшем окружении.",
-                        calculation: `Число Души (${soulNumber}) + Число Лица (${personalityNumber}) = ${soulNumber + personalityNumber} → ${influenceNumber}`
+                        calculation: `Число Души (${soulNumber}) + Число Лица (${personalityNumber}) = ${soulNumber + personalityNumber} → ${influenceNumber}`,
+                        type: "influence"
                     },
                     {
                         title: "11. Число Реальности",
                         value: realityNumber,
                         description: "Показывает, насколько адаптивен человек, насколько хорошо он понимает реальные условия жизни и как он справляется с вызовами и препятствиями.",
-                        calculation: `Число Лица (${personalityNumber}) + Число Развития (${developmentNumber}) = ${personalityNumber + developmentNumber} → ${realityNumber}`
+                        calculation: `Число Лица (${personalityNumber}) + Число Развития (${developmentNumber}) = ${personalityNumber + developmentNumber} → ${realityNumber}`,
+                        type: "reality"
                     },
                     {
                         title: "12. Число Интуитивного Понимания",
                         value: intuitiveNumber,
                         description: "Раскрывает глубину восприятия и уровень интуитивных способностей человека. Указывает на способность чувствовать скрытые смыслы и принимать верные решения.",
-                        calculation: `Число Души (${soulNumber}) + Число Развития (${developmentNumber}) = ${soulNumber + developmentNumber} → ${intuitiveNumber}`
+                        calculation: `Число Души (${soulNumber}) + Число Развития (${developmentNumber}) = ${soulNumber + developmentNumber} → ${intuitiveNumber}`,
+                        type: "intuitive"
                     },
                     {
                         title: "13. Число Качеств",
                         value: qualitiesNumber,
                         description: "Описывает набор качеств, которые человек демонстрирует в своей деятельности и взаимодействии с миром. Показывает, как проявляются таланты в социуме.",
-                        calculation: `Число Судьбы (${destinyNumber}) + Число Лица (${personalityNumber}) = ${destinyNumber + personalityNumber} → ${qualitiesNumber}`
+                        calculation: `Число Судьбы (${destinyNumber}) + Число Лица (${personalityNumber}) = ${destinyNumber + personalityNumber} → ${qualitiesNumber}`,
+                        type: "qualities"
                     },
                     {
                         title: "14. Число Рационального Мышления",
                         value: rationalNumber,
                         description: "Напрямую связано с логикой, анализом и практическими действиями. Отражает, как человек принимает решения и подходит к решению задач.",
-                        calculation: `В простейшей интерпретации равно Числу Лица: ${personalityNumber}`
+                        calculation: `В простейшей интерпретации равно Числу Лица: ${personalityNumber}`,
+                        type: "rational"
                     },
                     {
                         title: "15. Число Движения",
                         value: movementNumber,
                         description: "Показывает стиль и методы действий человека в жизни. Анализирует, как человек реализует свой потенциал и какие шаги предпочитает делать в первую очередь.",
-                        calculation: `Сумма числовых значений согласных букв имени, кроме первой: "${fullName.substring(1)}" = ${movementNumber}`
+                        calculation: `Сумма числовых значений согласных букв имени, кроме первой: "${fullName.substring(1)}" = ${movementNumber}`,
+                        type: "movement"
                     },
                     {
                         title: "16. Число Стабильности",
                         value: stabilityNumber,
                         description: "Отражает потребность в безопасности, стабильности и материальном обеспечении. Показывает, насколько человек ориентирован на финансовую и эмоциональную стабильность.",
-                        calculation: `Сумма числовых значений гласных букв имени, кроме последней: "${fullName.substring(0, fullName.length-1)}" = ${stabilityNumber}`
+                        calculation: `Сумма числовых значений гласных букв имени, кроме последней: "${fullName.substring(0, fullName.length-1)}" = ${stabilityNumber}`,
+                        type: "stability"
                     },
                     {
                         title: "17. Число Влияния Отцовской Линии",
                         value: fathersLineNumber,
                         description: "Показывает, какой вклад внесли отец, деды по отцовской линии и сам человек в развитие своего рода. Отражает наследственные таланты и проблемы, связанные с мужской энергией.",
-                        calculation: `Сумма числовых значений букв отчества "${patronymic}": ${patronymic.split('').map(c => letterValues[c] || c).join(' + ')} = ${fathersLineNumber}`
+                        calculation: `Сумма числовых значений букв отчества "${patronymic}": ${patronymic.split('').map(c => letterValues[c] || c).join(' + ')} = ${fathersLineNumber}`,
+                        type: "fathersLine"
                     },
                     {
                         title: "18. Число Влияния Материнской Линии",
                         value: mothersLineNumber,
                         description: "Указывает на влияние матери, бабушек по материнской линии и женского начала в целом. Раскрывает наследственные черты, связанные с домом, семьей и эмоциями.",
-                        calculation: `Сумма числовых значений букв фамилии "${lastName}": ${lastName.split('').map(c => letterValues[c] || c).join(' + ')} = ${mothersLineNumber}`
+                        calculation: `Сумма числовых значений букв фамилии "${lastName}": ${lastName.split('').map(c => letterValues[c] || c).join(' + ')} = ${mothersLineNumber}`,
+                        type: "mothersLine"
                     },
                     {
                         title: "19. Число Личного Года (2026)",
                         value: personalYear2026,
                         description: "Указывает на доминирующую тему текущего года. Помогает понять, какие события и темы будут актуальны в течение 2026 года.",
-                        calculation: `Сумма цифр года (2+0+2+6=10 → 1) + Число Жизненного Пути (${lifePath}) = ${1 + lifePath} → ${personalYear2026}`
+                        calculation: `Сумма цифр года (2+0+2+6=10 → 1) + Число Жизненного Пути (${lifePath}) = ${1 + lifePath} → ${personalYear2026}`,
+                        type: "personalYear"
                     },
                     {
                         title: "20. Число Личного Года (2027)",
                         value: personalYear2027,
                         description: "Указывает на доминирующую тему следующего года. Помогает подготовиться к событиям и темам, которые будут актуальны в 2027 году.",
-                        calculation: `Сумма цифр года (2+0+2+7=11) + Число Жизненного Пути (${lifePath}) = ${11 + lifePath} → ${personalYear2027}`
+                        calculation: `Сумма цифр года (2+0+2+7=11) + Число Жизненного Пути (${lifePath}) = ${11 + lifePath} → ${personalYear2027}`,
+                        type: "personalYear"
                     },
                     {
                         title: "21. Число Личного Года (2028)",
                         value: personalYear2028,
                         description: "Указывает на доминирующую тему года после следующего. Помогает заглянуть в будущее и понять перспективы на 2028 год.",
-                        calculation: `Сумма цифр года (2+0+2+8=12 → 3) + Число Жизненного Пути (${lifePath}) = ${3 + lifePath} → ${personalYear2028}`
+                        calculation: `Сумма цифр года (2+0+2+8=12 → 3) + Число Жизненного Пути (${lifePath}) = ${3 + lifePath} → ${personalYear2028}`,
+                        type: "personalYear"
                     },
                     {
                         title: "22. Число Решения",
                         value: decisionNumber,
                         description: "Помогает принимать верные решения в сложных ситуациях. Показывает, как лучше всего сочетать внешнее действие с внутренним потенциалом.",
-                        calculation: `Число Лица (${personalityNumber}) + Число Судьбы (${destinyNumber}) = ${personalityNumber + destinyNumber} → ${decisionNumber}`
+                        calculation: `Число Лица (${personalityNumber}) + Число Судьбы (${destinyNumber}) = ${personalityNumber + destinyNumber} → ${decisionNumber}`,
+                        type: "decision"
                     },
                     {
                         title: "23. Число Связи",
                         value: connectionNumber,
                         description: "Показывает, как человек строит отношения с другими людьми. Описывает, как внутренние желания человека сочетаются с его предназначением в паре.",
-                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${connectionNumber}`
+                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${connectionNumber}`,
+                        type: "connection"
                     },
                     {
                         title: "24. Число Партнерства",
                         value: partnershipNumber,
                         description: "Используется для оценки совместимости двух людей. Дает представление о гармонии и потенциальных трудностях в отношениях.",
-                        calculation: `Число Жизненного Пути (${lifePath}) + Число Жизненного Пути партнера (${partnerLifePath}) = ${lifePath + partnerLifePath} → ${partnershipNumber}`
+                        calculation: `Число Жизненного Пути (${lifePath}) + Число Жизненного Пути партнера (${partnerLifePath}) = ${lifePath + partnerLifePath} → ${partnershipNumber}`,
+                        type: "partnership"
                     },
                     {
                         title: "25. Число Совместимости Душ",
                         value: soulCompatibility,
                         description: "Показывает глубинную эмоциональную совместимость партнеров. Отражает, насколько близки внутренние желания и стремления двух людей.",
-                        calculation: `Число Души (${soulNumber}) + Число Души партнера (${partnerSoul}) = ${soulNumber + partnerSoul} → ${soulCompatibility}`
+                        calculation: `Число Души (${soulNumber}) + Число Души партнера (${partnerSoul}) = ${soulNumber + partnerSoul} → ${soulCompatibility}`,
+                        type: "soulCompatibility"
                     },
                     {
                         title: "26. Число Совместимости Судьбы",
                         value: destinyCompatibility,
                         description: "Указывает на совместимость жизненных путей и предназначений партнеров. Показывает, насколько гармонично партнеры могут двигаться по жизни вместе.",
-                        calculation: `Число Судьбы (${destinyNumber}) + Число Судьбы партнера (${partnerDestiny}) = ${destinyNumber + partnerDestiny} → ${destinyCompatibility}`
+                        calculation: `Число Судьбы (${destinyNumber}) + Число Судьбы партнера (${partnerDestiny}) = ${destinyNumber + partnerDestiny} → ${destinyCompatibility}`,
+                        type: "destinyCompatibility"
                     },
                     {
                         title: "27. Мула-анка (Ведическая)",
                         value: mulaAnka,
                         description: "Основное число или корневое число в ведической нумерологии. Является главным кодом судьбы и жизненной силы человека, символизирует кармическое предназначение.",
-                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`,
+                        type: "mulaAnka"
                     },
                     {
                         title: "28. Наманка (Ведическая)",
                         value: namaAnka,
                         description: "Число имени в ведической нумерологии. Показывает, как имя человека влияет на его судьбу, отражает социальный статус и репутацию.",
-                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`
+                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`,
+                        type: "namaAnka"
                     },
                     {
                         title: "29. Бхагянка (Ведическая)",
                         value: bhagyanKa,
                         description: "Число удачи в ведической нумерологии. Напрямую связано с благополучием, финансовым положением и общим уровнем счастья человека.",
-                        calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`
+                        calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`,
+                        type: "bhagyanKa"
                     },
                     {
                         title: "30. Лагна-анка (Ведическая)",
                         value: lagnaAnka,
                         description: "Указывает на лучший период времени для принятия важных решений, начала новых проектов или путешествий. Помогает определить наиболее благоприятные временные интервалы.",
-                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`,
+                        type: "lagnaAnka"
                     },
                     {
                         title: "31. Число Жизненного Пути Партнера",
                         value: partnerLifePath,
                         description: "Основная характеристика партнера, его «код жизни». Раскрывает основную цель существования партнера, ключевые уроки и общие черты характера.",
-                        calculation: `Сложение всех цифр даты рождения партнера (${formattedPartnerBirthDate}): ${partnerBirthdate.split('-').join('').split('').join(' + ')} = ${partnerBirthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${partnerLifePath}`
+                        calculation: `Сложение всех цифр даты рождения партнера (${formattedPartnerBirthDate}): ${partnerBirthdate.split('-').join('').split('').join(' + ')} = ${partnerBirthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${partnerLifePath}`,
+                        type: "partnerLifePath"
                     },
                     {
                         title: "32. Число Судьбы Партнера",
                         value: partnerDestiny,
                         description: "Раскрывает врожденные таланты, способности и потенциал партнера. Ключ к пониманию предназначения партнера и его жизненного пути.",
-                        calculation: `Сумма числовых значений всех букв полного имени партнера "${partnerName}": ${partnerName.split('').map(c => letterValues[c] || c).join(' + ')} = ${partnerDestiny}`
+                        calculation: `Сумма числовых значений всех букв полного имени партнера "${partnerName}": ${partnerName.split('').map(c => letterValues[c] || c).join(' + ')} = ${partnerDestiny}`,
+                        type: "partnerDestiny"
                     }
                 ];
                 
@@ -955,31 +1228,31 @@
                 results.forEach((result, index) => {
                     setTimeout(() => {
                         const card = document.createElement('div');
-                        card.className = 'calculation-card';
-                        card.style.animationDelay = `${index * 0.05}s`;
+                        card.className = 'calculation-card card-appear';
+                        card.style.animationDelay = `${index * 0.08}s`;
+                        card.style.borderTopColor = index % 2 === 0 ? '#da1b60' : '#2575fc';
                         
                         // Определяем, является ли число мастер-числом
                         const isMasterNumber = [11, 22, 33].includes(result.value);
                         const valueDisplay = isMasterNumber ? `<span class="master-number">${result.value}</span>` : result.value;
+                        
+                        // Получаем глубокую интерпретацию
+                        const interpretation = getInterpretation(result.value, result.title);
                         
                         card.innerHTML = `
                             <h3>${result.title}</h3>
                             <div class="result-value">${valueDisplay}</div>
                             <div class="explanation">${result.description}</div>
                             <div class="calculation"><strong>Расчет:</strong> ${result.calculation}</div>
-                            <div class="explanation"><strong>Интерпретация:</strong> ${getNumberDescription(result.value, 
-                                result.title.includes('Жизненного Пути') ? 'lifePath' : 
-                                result.title.includes('Судьбы') ? 'destiny' : 
-                                result.title.includes('Души') ? 'soul' : 
-                                result.title.includes('Лица') ? 'personality' : 'default')}</div>
+                            <div class="explanation"><strong>Глубокая интерпретация:</strong> ${interpretation}</div>
                         `;
                         
                         resultsContainer.appendChild(card);
-                    }, 100 + index * 100);
+                    }, 150 + index * 120);
                 });
                 
                 // Прокручиваем к результатам
-                document.querySelector('.results-section').scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('.results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
             
             // Устанавливаем сегодняшнюю дату по умолчанию
@@ -996,5 +1269,4 @@
     </script>
 </body>
 </html>
-
 

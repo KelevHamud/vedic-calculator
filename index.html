@@ -3,1822 +3,998 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ведический Нумерологический Калькулятор</title>
+    <title>Нумерологический калькулятор - 32 расчета</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --amber-50: #fffbeb;
-            --amber-100: #fef3c7;
-            --amber-200: #fde68a;
-            --amber-300: #fcd34d;
-            --amber-400: #fbbf24;
-            --amber-500: #f59e0b;
-            --amber-600: #d97706;
-            --amber-700: #b45309;
-            --amber-800: #92400e;
-            --amber-900: #78350f;
-            --orange-50: #fff7ed;
-            --orange-100: #ffedd5;
-            --orange-200: #fed7aa;
-            --orange-300: #fdba74;
-            --orange-400: #fb923c;
-            --orange-500: #f97316;
-            --orange-600: #ea580c;
-            --orange-700: #c2410c;
-            --orange-800: #9a3412;
-            --orange-900: #7c2d12;
-            --red-500: #ef4444;
-            --green-500: #22c55e;
-            --blue-500: #3b82f6;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-500: #6b7280;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --white: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --transition: all 0.3s ease;
-            --border-radius: 0.75rem;
-            --border-radius-lg: 1rem;
-            --border-radius-xl: 1.5rem;
-        }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            color: var(--gray-800);
             line-height: 1.6;
-            min-height: 100vh;
-            padding-bottom: 4rem;
+            color: #333;
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50, #4a6491);
+            background-attachment: fixed;
+            padding: 20px;
         }
-
-        header {
-            background: linear-gradient(90deg, var(--amber-600) 0%, var(--orange-800) 100%);
-            color: var(--white);
-            padding: 1.5rem 0;
-            box-shadow: var(--shadow-lg);
-            text-align: center;
-        }
-
+        
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
         }
-
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
+        }
+        
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        @media (min-width: 768px) {
-            h1 {
-                font-size: 3.5rem;
-            }
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            max-width: 60rem;
-            margin: 0 auto 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .subtitle {
-                font-size: 1.5rem;
-            }
-        }
-
-        .progress-container {
-            display: flex;
-            justify-content: space-between;
-            max-width: 40rem;
-            margin: 2rem auto 3rem;
-            position: relative;
-        }
-
-        .progress-container::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--gray-200);
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .progress-bar {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            height: 4px;
-            background-color: var(--amber-500);
-            transform: translateY(-50%);
-            z-index: 2;
-            transition: width 0.5s ease;
-        }
-
-        .step {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            background-color: var(--gray-300);
-            color: var(--gray-700);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            position: relative;
-            z-index: 3;
-            transition: var(--transition);
-            border: 3px solid var(--gray-200);
-        }
-
-        .step.active {
-            background-color: var(--amber-500);
-            color: var(--white);
-            transform: scale(1.15);
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
-            border-color: var(--amber-300);
-        }
-
-        .step.completed {
-            background-color: var(--amber-400);
-            color: var(--white);
-            border-color: var(--amber-300);
-        }
-
-        .card {
-            background-color: var(--white);
-            border-radius: var(--border-radius-xl);
-            box-shadow: var(--shadow-xl);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 40rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @media (min-width: 768px) {
-            .card {
-                padding: 2rem;
-            }
-        }
-
-        .card-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-subtitle {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--gray-700);
-            max-width: 30rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--gray-700);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--amber-200);
-            border-radius: 0.75rem;
-            font-size: 1.125rem;
-            transition: var(--transition);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--amber-500);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 9999px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 10rem;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--amber-500) 0%, var(--orange-600) 100%);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(90deg, var(--amber-600) 0%, var(--orange-700) 100%);
-        }
-
-        .btn-primary:disabled {
-            background: var(--gray-300);
-            color: var(--gray-500);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            background-color: var(--gray-200);
-            color: var(--gray-800);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--gray-300);
-        }
-
-        .btn-outline {
-            background-color: var(--white);
-            color: var(--amber-700);
-            border: 2px solid var(--amber-300);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--amber-50);
-        }
-
-        .btn-skip {
-            background: linear-gradient(90deg, var(--amber-300) 0%, var(--orange-400) 100%);
-            color: var(--white);
-        }
-
-        .btn-skip:hover {
-            background: linear-gradient(90deg, var(--amber-400) 0%, var(--orange-500) 100%);
-        }
-
-        .step-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .step-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .results-container {
-            display: none;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .results-container.active {
-            display: block;
-        }
-
-        .numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .number-card {
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            border: 2px solid var(--amber-200);
-            border-radius: var(--border-radius-lg);
-            padding: 1.5rem;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .number-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .number-value {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--amber-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .number-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 0.75rem;
-        }
-
-        .number-description {
-            color: var(--gray-600);
-            font-size: 0.95rem;
-        }
-
-        .karmic-debts {
-            background-color: var(--amber-50);
-            border-left: 4px solid var(--amber-500);
-            padding: 1.5rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 2rem 0;
-        }
-
-        .karmic-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .karmic-numbers {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .karmic-number {
-            background-color: var(--amber-200);
-            color: var(--amber-900);
-            padding: 0.5rem 1.25rem;
-            border-radius: 9999px;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .karmic-description {
-            color: var(--gray-700);
-        }
-
-        .chart-container {
-            height: 320px;
-            margin: 2rem auto;
-            position: relative;
-            max-width: 100%;
-        }
-
-        .chart-title {
-            text-align: center;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 1rem;
-        }
-
-        .chart-subtitle {
-            text-align: center;
-            color: var(--gray-700);
-            margin-bottom: 2rem;
-            max-width: 45rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 80%;
-            padding: 0 1rem;
-            gap: 8px;
-        }
-
-        .bar {
-            width: 40px;
-            background: linear-gradient(to top, var(--amber-500), var(--orange-600));
-            border-radius: 8px 8px 0 0;
-            position: relative;
-            transition: height 0.8s ease, transform 0.3s ease;
-            transform-origin: bottom;
-        }
-
-        .bar:hover {
-            transform: scaleY(1.05);
-            z-index: 10;
-        }
-
-        .bar-label {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .bar-value {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--white);
-            color: var(--amber-700);
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
-            box-shadow: var(--shadow-sm);
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .grid-item {
-            padding: 1.25rem;
-            border-radius: var(--border-radius-lg);
-            border: 1px solid var(--amber-200);
-            transition: var(--transition);
-        }
-
-        .grid-item:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .grid-item.strong {
-            background: linear-gradient(135deg, var(--amber-100) 0%, var(--orange-50) 100%);
-        }
-
-        .grid-item.weak {
-            background-color: var(--gray-50);
-        }
-
-        .grid-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            gap: 0.75rem;
-        }
-
-        .grid-digit {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--amber-700);
-        }
-
-        .grid-planet {
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-
-        .grid-count {
-            color: var(--amber-600);
-            font-size: 0.9rem;
-        }
-
-        .grid-description {
-            color: var(--gray-600);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .time-cycles {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 50rem;
-            margin: 0 auto 3rem;
-        }
-
-        .cycle-card {
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            border: 2px solid var(--amber-200);
-            border-radius: var(--border-radius-lg);
-            padding: 1.75rem;
-            text-align: center;
-        }
-
-        .cycle-value {
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--amber-700);
-            margin-bottom: 0.75rem;
-        }
-
-        .cycle-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 1rem;
-        }
-
-        .cycle-description {
-            color: var(--gray-700);
-        }
-
-        .vimshottari {
-            background: linear-gradient(90deg, var(--amber-50) 0%, var(--orange-50) 100%);
-            border: 1px dashed var(--amber-300);
-            border-radius: var(--border-radius-lg);
-            padding: 1.75rem;
-            text-align: center;
-            margin-top: 2.5rem;
-        }
-
-        .vimshottari-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 1rem;
-        }
-
-        .compatibility-container {
-            max-width: 50rem;
-            margin: 0 auto 3rem;
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            border-radius: var(--border-radius-lg);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .compatibility-numbers {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 1.5rem;
-        }
-
-        .compatibility-value {
-            font-size: 4rem;
-            font-weight: 800;
-            margin: 1.5rem 0;
-            background: linear-gradient(90deg, var(--green-500) 0%, var(--amber-600) 100%);
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #1a2a6c, #2c3e50, #4a6491, #2c3e50, #1a2a6c);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-
-        .compatibility-type {
-            font-size: 2.5rem;
             font-weight: 800;
-            margin: 1.5rem 0;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-        .compatibility-type.strong {
-            color: var(--amber-600);
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            font-weight: 500;
         }
-
-        .compatibility-type.challenging {
-            color: var(--red-500);
-        }
-
-        .compatibility-type.neutral {
-            color: var(--blue-500);
-        }
-
-        .compatibility-description {
-            font-size: 1.25rem;
-            color: var(--gray-700);
-            margin-bottom: 2rem;
-            max-width: 40rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .compatibility-recommendations {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 1px solid var(--amber-200);
-        }
-
-        .recommendations-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 0.75rem;
-        }
-
-        .kundali {
-            background-color: var(--amber-50);
-            border: 1px solid var(--amber-200);
-            border-radius: var(--border-radius-lg);
-            padding: 1.75rem;
-            text-align: center;
-            margin-top: 2.5rem;
-        }
-
-        .kundali-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 1rem;
-        }
-
-        .kundali-score {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--amber-700);
-            margin: 1rem 0;
-        }
-
-        .lucky-grid {
+        
+        .calculator-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 65rem;
-            margin: 0 auto;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
         }
-
-        .lucky-card {
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            border: 2px solid var(--amber-200);
-            border-radius: var(--border-radius-lg);
-            padding: 1.75rem;
-            text-align: center;
-        }
-
-        .lucky-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .lucky-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 1.25rem;
-        }
-
-        .lucky-highlight {
-            font-weight: 700;
-            color: var(--amber-700);
-            font-size: 1.25rem;
-        }
-
-        .lucky-weak {
-            font-weight: 700;
-            color: var(--red-500);
-        }
-
-        .disclaimer {
-            background-color: var(--amber-50);
-            border-left: 4px solid var(--amber-500);
-            padding: 1.75rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 3rem auto;
-            max-width: 50rem;
-        }
-
-        .disclaimer-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .disclaimer-text {
-            color: var(--gray-700);
-        }
-
-        footer {
-            background: linear-gradient(90deg, var(--amber-800) 0%, var(--orange-900) 100%);
-            color: var(--white);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .footer-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.9;
-        }
-
-        .footer-text {
-            opacity: 0.75;
-            max-width: 45rem;
-            margin: 0 auto;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 640px) {
-            .action-buttons {
-                flex-direction: row;
-                justify-content: center;
+        
+        @media (min-width: 900px) {
+            .calculator-container {
+                grid-template-columns: 1fr 1fr;
             }
         }
-
-        .planet-descriptions {
+        
+        .input-section, .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+        
+        .input-section h2, .results-section h2 {
+            font-size: 2.1rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .input-section h2::after, .results-section h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 22px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        input[type="date"], input[type="text"], input[type="time"], input[type="place"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        input[type="date"]:focus, input[type="text"]:focus, input[type="time"]:focus {
+            border-color: #4a6491;
+            box-shadow: 0 0 0 3px rgba(74, 100, 145, 0.2);
+            background: #fff;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #4a6491, #2c3e50, #1a2a6c);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.35rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 35px auto 0;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(26, 42, 108, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 42, 108, 0.55);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 100%);
+            transform: rotate(30deg);
+            transition: all 0.8s;
+        }
+        
+        button:hover::after {
+            left: 120%;
+        }
+        
+        .results-container {
             display: none;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
-
-        .exaltation-note {
-            background-color: var(--orange-50);
-            border-left: 4px solid var(--orange-400);
-            padding: 1rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 1.5rem 0;
-            font-style: italic;
+        
+        @media (max-width: 768px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
         }
-
-        .myth-section {
-            background: linear-gradient(135deg, var(--amber-50) 0%, var(--orange-100) 100%);
-            border-radius: var(--border-radius-lg);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border: 1px solid var(--amber-200);
+        
+        .calculation-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+            border-top: 5px solid #4a6491;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .myth-title {
-            font-size: 1.5rem;
+        
+        .calculation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .calculation-card h3 {
+            font-size: 1.65rem;
+            margin-bottom: 15px;
+            color: #1a2a6c;
+            display: flex;
+            align-items: center;
+        }
+        
+        .calculation-card h3::before {
+            content: "•";
+            color: #da1b60;
+            font-size: 2.2rem;
+            margin-right: 10px;
+            line-height: 0.7;
+        }
+        
+        .result-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 15px 0;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        
+        .explanation {
+            background: #f0f4f8;
+            border-left: 4px solid #4a6491;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        
+        .calculation {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #4a5568;
+            padding-left: 10px;
+            border-left: 2px dashed #cbd5e0;
+        }
+        
+        .master-number {
+            background: linear-gradient(90deg, #ff8a00, #da1b60);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-weight: 700;
-            color: var(--amber-800);
-            margin-bottom: 0.75rem;
-            text-align: center;
+            font-size: 1.1em;
         }
-
-        .myth-content {
-            color: var(--gray-700);
-            font-style: italic;
+        
+        .section-title {
             text-align: center;
-            max-width: 40rem;
-            margin: 0 auto;
+            font-size: 2.3rem;
+            margin: 50px 0 30px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
         }
-
-        @media print {
-            body {
-                background: var(--white);
-                padding: 0;
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #da1b60, #6a11cb, #2575fc);
+            border-radius: 2px;
+        }
+        
+        .intro-text {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+        
+        .intro-text p {
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(255,215,0,0.2), rgba(255,105,180,0.15));
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
             }
             
-            header, .progress-container, .btn-container, .action-buttons, footer {
-                display: none;
+            .subtitle {
+                font-size: 1.15rem;
             }
             
-            .card, .results-container {
-                box-shadow: none;
-                padding: 1rem;
-                margin: 0;
-                border-radius: 0;
+            .input-section, .results-section {
+                padding: 20px;
             }
             
-            .number-card, .cycle-card, .lucky-card, .compatibility-container {
-                break-inside: avoid;
+            button {
+                padding: 15px 35px;
+                font-size: 1.2rem;
             }
+            
+            .result-value {
+                font-size: 2.3rem;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(74, 100, 145, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(74, 100, 145, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 100, 145, 0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Ведический Нумерологический Калькулятор</h1>
-            <p class="subtitle">Откройте для себя свой кармический код судьбы: от персональных чисел до Вимшоттари Даша</p>
-        </div>
-    </header>
-
     <div class="container">
-        <!-- Progress Steps -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-            <div class="step active" data-step="1">1</div>
-            <div class="step" data-step="2">2</div>
-            <div class="step" data-step="3">3</div>
-            <div class="step" data-step="4">4</div>
+        <header>
+            <h1>🔮 Нумерологический калькулятор</h1>
+            <p class="subtitle">Полный анализ вашей нумерологической карты на основе даты рождения и полного имени. Получите более 30 расчетов с подробными интерпретациями.</p>
+        </header>
+        
+        <div class="intro-text">
+            <p>Нумерология — это древняя наука о числах и их влиянии на нашу жизнь. Каждое число несет в себе особую вибрацию и смысл. Введите ваши данные, чтобы получить <span class="highlight">полный нумерологический анализ</span>, включающий основные расчеты, комплексные показатели и прогнозы.</p>
+            <p>Система использует <span class="highlight">пифагорейскую нумерологию</span> для анализа русских имен. Все расчеты соответствуют классическим методикам, описанным в авторитетных источниках.</p>
         </div>
-
-        <!-- Step 1: Birth Date -->
-        <div class="card step-content active" id="step-1">
-            <h2 class="card-title">Шаг 1: Дата рождения</h2>
-            <p class="card-subtitle">Введите вашу дату рождения для расчета Числа Души и Числа Судьбы</p>
-            
-            <div class="form-group">
-                <label for="birthDate" class="form-label">Дата рождения</label>
-                <input type="date" id="birthDate" class="form-input" max="2026-12-31">
+        
+        <div class="calculator-container">
+            <div class="input-section">
+                <h2>Ваши данные</h2>
+                <div class="form-group">
+                    <label for="birthdate">Дата рождения:</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthTime">Время рождения:</label>
+                    <input type="time" id="birthTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthPlace">Место рождения:</label>
+                    <input type="text" id="birthPlace" placeholder="Город, страна" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullName">Полное имя (ФИО):</label>
+                    <input type="text" id="fullName" placeholder="Иван Иванович Иванов" required>
+                </div>
+                
+                <h2 style="margin-top: 35px">Данные партнера</h2>
+                <div class="form-group">
+                    <label for="partnerBirthdate">Дата рождения партнера:</label>
+                    <input type="date" id="partnerBirthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="partnerName">Полное имя партнера (ФИО):</label>
+                    <input type="text" id="partnerName" placeholder="Мария Сергеевна Петрова" required>
+                </div>
+                
+                <button type="button" id="calculateBtn" class="pulse">Рассчитать нумерологию</button>
             </div>
             
-            <div class="btn-container">
-                <button class="btn btn-primary" id="next-1" disabled>Далее →</button>
-            </div>
-        </div>
-
-        <!-- Step 2: Full Name -->
-        <div class="card step-content" id="step-2">
-            <h2 class="card-title">Шаг 2: Полное имя</h2>
-            <p class="card-subtitle">Введите ваше полное имя (имя, отчество, фамилия) для расчета Числа Имени</p>
-            
-            <div class="form-group">
-                <label for="fullName" class="form-label">Полное имя при рождении</label>
-                <input type="text" id="fullName" class="form-input" placeholder="Иван Иванович Иванов">
-            </div>
-            
-            <div class="btn-container">
-                <button class="btn btn-secondary" id="prev-2">← Назад</button>
-                <button class="btn btn-primary" id="next-2" disabled>Далее →</button>
-            </div>
-        </div>
-
-        <!-- Step 3: Birth Time and Place -->
-        <div class="card step-content" id="step-3">
-            <h2 class="card-title">Шаг 3: Время и место рождения (опционально)</h2>
-            <p class="card-subtitle">Для углубленного анализа временных циклов (Вимшоттари Даша) и точного анализа совместимости</p>
-            
-            <div class="form-group">
-                <label for="birthTime" class="form-label">Время рождения</label>
-                <input type="time" id="birthTime" class="form-input">
-            </div>
-            
-            <div class="form-group">
-                <label for="birthPlace" class="form-label">Место рождения</label>
-                <input type="text" id="birthPlace" class="form-input" placeholder="Москва, Россия">
-            </div>
-            
-            <div class="btn-container">
-                <button class="btn btn-secondary" id="prev-3">← Назад</button>
-                <button class="btn btn-skip" id="skip-3">Пропустить →</button>
-                <button class="btn btn-primary" id="next-3">Далее →</button>
+            <div class="results-section">
+                <h2>Ваши нумерологические расчеты</h2>
+                <div id="resultsContainer" class="results-container">
+                    <!-- Результаты будут добавлены сюда через JavaScript -->
+                </div>
             </div>
         </div>
-
-        <!-- Step 4: Partner Data -->
-        <div class="card step-content" id="step-4">
-            <h2 class="card-title">Шаг 4: Данные партнера (опционально)</h2>
-            <p class="card-subtitle">Для анализа совместимости в отношениях по методу Кундали Матчин</p>
-            
-            <div class="form-group">
-                <label for="partnerBirthDate" class="form-label">Дата рождения партнера</label>
-                <input type="date" id="partnerBirthDate" class="form-input" max="2026-12-31">
-            </div>
-            
-            <div class="form-group">
-                <label for="partnerFullName" class="form-label">Полное имя партнера</label>
-                <input type="text" id="partnerFullName" class="form-input" placeholder="Мария Сергеевна Петрова">
-            </div>
-            
-            <div class="btn-container">
-                <button class="btn btn-secondary" id="prev-4">← Назад</button>
-                <button class="btn btn-primary" id="calculate">Рассчитать →</button>
-            </div>
+        
+        <h2 class="section-title">Как это работает</h2>
+        <div class="intro-text">
+            <p>Наш калькулятор выполняет <span class="highlight">32 уникальных расчета</span>, основанных на классических нумерологических системах. Алгоритмы расчетов соответствуют методикам, описанным в научных работах по систематизации нумерологических вычислений.</p>
+            <p>Мы используем <span class="highlight">пифагорейскую систему</span> для преобразования букв в числа. Каждая буква русского алфавита имеет числовое значение от 1 до 9. Все расчеты выполняются с учетом мастер-чисел (11, 22, 33), которые не сокращаются до однозначных значений из-за их особой энергетической значимости.</p>
+            <p>Результаты включают как базовые характеристики (Число Жизненного Пути, Число Судьбы), так и комплексные показатели (Число Развития, Число Партнерства), а также прогнозы на текущий год.</p>
         </div>
-
-        <!-- Results View -->
-        <div class="results-container" id="results">
-            <!-- Personal Numbers Section -->
-            <div class="card">
-                <h2 class="card-title">Ваша Персональная Нумерологическая Карта</h2>
-                
-                <div class="numbers-grid" id="personal-numbers">
-                    <!-- Numbers will be inserted here by JavaScript -->
-                </div>
-                
-                <div class="karmic-debts" id="karmic-debts" style="display: none;">
-                    <h3 class="karmic-title">⚠️ Кармические Долги</h3>
-                    <div class="karmic-numbers" id="karmic-numbers">
-                        <!-- Karmic debts will be inserted here -->
-                    </div>
-                    <p class="karmic-description">
-                        Эти числа указывают на незавершенные задачи из прошлых жизней, требующие осознанной работы в текущей жизни. 
-                        <strong>13</strong> — предательство и обман, <strong>14</strong> — гордыня и отказ от помощи, 
-                        <strong>16</strong> — недостаток ответственности, <strong>19</strong> — материализм и эгоизм.
-                    </p>
-                </div>
-                
-                <div class="exaltation-note" id="exaltation-note" style="display: none;">
-                    <!-- Exaltation note will be inserted here -->
-                </div>
-                
-                <div class="myth-section" id="myth-section">
-                    <h3 class="myth-title">Мифологическая основа ваших чисел</h3>
-                    <p class="myth-content" id="myth-content">
-                        <!-- Myth content will be inserted here -->
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Vedic Grid Section -->
-            <div class="card" id="vedic-grid-section" style="display: none;">
-                <h2 class="chart-title">Ведическая Нумерологическая Матрица (Психоматрица)</h2>
-                <p class="chart-subtitle">Визуальное представление частоты каждой цифры в вашей нумерологической карте. Высокие столбцы указывают на сильные стороны, низкие — на области для развития.</p>
-                
-                <div class="chart-container">
-                    <div class="bar-chart" id="bar-chart">
-                        <!-- Bars will be inserted here by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="grid-container" id="grid-container">
-                    <!-- Grid items will be inserted here by JavaScript -->
-                </div>
-            </div>
-            
-            <!-- Time Cycles Section -->
-            <div class="card" id="time-cycles-section" style="display: none;">
-                <h2 class="card-title">Анализ Временных Циклов</h2>
-                
-                <div class="time-cycles" id="time-cycles">
-                    <!-- Time cycles will be inserted here -->
-                </div>
-                
-                <div class="vimshottari" id="vimshottari-note">
-                    <h3 class="vimshottari-title">Система Вимшоттари Даша</h3>
-                    <p class="chart-subtitle">
-                        Для расчета планетарных периодов Вимшоттари Даша требуется точное время и место рождения. 
-                        Этот анализ дает глубокое понимание жизненных циклов и периодов влияния разных планет.
-                        <br><br>
-                        Текущий период: <span class="lucky-highlight">Махадаша Юпитера (Число 3)</span> - период удачи, мудрости и духовного роста.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Compatibility Section -->
-            <div class="card" id="compatibility-section" style="display: none;">
-                <h2 class="card-title">Анализ Совместимости Партнеров</h2>
-                
-                <div class="compatibility-container" id="compatibility-result">
-                    <!-- Compatibility result will be inserted here -->
-                </div>
-                
-                <div class="kundali">
-                    <h3 class="kundali-title">Углубленный анализ по принципу Кундали Матчин</h3>
-                    <p class="chart-subtitle">
-                        Для полного анализа совместимости по методу Кундали Матчин (36 параметров) требуется полная натальная карта обоих партнеров.
-                        В упрощенной модели ваша совместимость оценивается в <span class="kundali-score">24 из 36</span> баллов.
-                        <br><br>
-                        Минимально приемлемый уровень: 18 баллов. Идеальный брак: 26+ баллов.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Lucky Numbers Section -->
-            <div class="card" id="lucky-section" style="display: none;">
-                <h2 class="card-title">Практическое Руководство по Счастливым Числам</h2>
-                <p class="chart-subtitle">Персонализированные рекомендации для усиления сильных сторон и гармонизации слабых областей вашей жизни</p>
-                
-                <div class="lucky-grid" id="lucky-grid">
-                    <!-- Lucky number cards will be inserted here -->
-                </div>
-            </div>
-            
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button class="btn btn-outline" id="new-calculation">Новый расчет</button>
-                <button class="btn btn-primary" id="save-results" onclick="window.print()">Сохранить результаты</button>
-            </div>
-            
-            <!-- Ethical Disclaimer -->
-            <div class="disclaimer">
-                <h3 class="disclaimer-title">⚠️ Этическое предупреждение</h3>
-                <p class="disclaimer-text">
-                    Этот анализ основан на древней ведической традиции (Премананда "Ведическая нумерология", Байба Стурите "Ведическая нумерология. Кармический код судьбы") и предназначен для рефлексии и самопознания. 
-                    Он не заменяет профессиональную психологическую, медицинскую или юридическую консультацию. 
-                    Все интерпретации представлены в терминах потенциала и возможностей, а не как предсказания будущего. 
-                    Счастье и успех в жизни зависят от ваших решений, действий и отношения к окружающему миру.
-                </p>
-            </div>
-        </div>
+        
+        <footer>
+            <p>Нумерологический калькулятор © 2026 | Все расчеты основаны на классических методиках пифагорейской нумерологии</p>
+            <p>Систематизация нумерологических расчетов: Алгоритмы, данные и интерпретации</p>
+        </footer>
     </div>
 
-    <footer>
-        <div class="container">
-            <p class="footer-title">Ведический Нумерологический Калькулятор © 2026</p>
-            <p class="footer-text">
-                Основано на классических ведических текстах, включая "Брихат Парашара Хора Шастра". 
-                Все расчеты выполняются локально в вашем браузере. Ваши данные не сохраняются и не передаются третьим лицам.
-            </p>
-        </div>
-    </footer>
-
     <script>
-        // State variables
-        let currentStep = 1;
-        let birthDate = '';
-        let fullName = '';
-        let birthTime = '';
-        let birthPlace = '';
-        let partnerBirthDate = '';
-        let partnerFullName = '';
-        let results = null;
-        let vedicGridData = [];
-        let personalYear = null;
-        let compatibilityResult = null;
-        let luckyNumbers = null;
-        const currentDateTime = new Date(2026, 1, 3); // Fixed to knowledge cutoff date
-
-        // Letter to number mapping (Cyrillic Vedic system)
-        const letterMap = {
-            'А': 1, 'И': 1, 'Й': 1, 'Т': 1, 'Ы': 1,
-            'Б': 2, 'Л': 2, 'У': 2,
-            'В': 3, 'М': 3, 'Ф': 3,
-            'Г': 4, 'Н': 4, 'Х': 4,
-            'Д': 5, 'О': 5, 'Ц': 5,
-            'Е': 6, 'П': 6, 'Ч': 6, 'Э': 6,
-            'Ё': 7, 'Ж': 7, 'Р': 7, 'Ш': 7, 'Ю': 7,
-            'З': 8, 'С': 8, 'Щ': 8, 'Я': 8,
-            'К': 9, 'Ъ': 9
-        };
-
-        // Vowels for Heart's Desire calculation (Cyrillic)
-        const vowels = ['А', 'Е', 'Ё', 'И', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'];
-
-        // DOM Elements
-        const stepContents = document.querySelectorAll('.step-content');
-        const progressBar = document.getElementById('progress-bar');
-        const steps = document.querySelectorAll('.step');
-        const resultsContainer = document.getElementById('results');
-        const birthDateInput = document.getElementById('birthDate');
-        const fullNameInput = document.getElementById('fullName');
-        const birthTimeInput = document.getElementById('birthTime');
-        const birthPlaceInput = document.getElementById('birthPlace');
-        const partnerBirthDateInput = document.getElementById('partnerBirthDate');
-        const partnerFullNameInput = document.getElementById('partnerFullName');
-        const nextButtons = document.querySelectorAll('[id^="next"]');
-        const prevButtons = document.querySelectorAll('[id^="prev"]');
-        const skipButton = document.getElementById('skip-3');
-        const calculateButton = document.getElementById('calculate');
-        const newCalculationButton = document.getElementById('new-calculation');
-
-        // Event Listeners
-        birthDateInput.addEventListener('change', () => {
-            birthDate = birthDateInput.value;
-            document.getElementById('next-1').disabled = !birthDate;
-        });
-
-        fullNameInput.addEventListener('input', () => {
-            fullName = fullNameInput.value;
-            document.getElementById('next-2').disabled = !fullName.trim();
-        });
-
-        birthTimeInput.addEventListener('change', () => {
-            birthTime = birthTimeInput.value;
-        });
-
-        birthPlaceInput.addEventListener('input', () => {
-            birthPlace = birthPlaceInput.value;
-        });
-
-        partnerBirthDateInput.addEventListener('change', () => {
-            partnerBirthDate = partnerBirthDateInput.value;
-        });
-
-        partnerFullNameInput.addEventListener('input', () => {
-            partnerFullName = partnerFullNameInput.value;
-        });
-
-        // Navigation buttons
-        document.getElementById('next-1').addEventListener('click', () => goToStep(2));
-        document.getElementById('next-2').addEventListener('click', () => goToStep(3));
-        document.getElementById('next-3').addEventListener('click', () => goToStep(4));
-        document.getElementById('prev-2').addEventListener('click', () => goToStep(1));
-        document.getElementById('prev-3').addEventListener('click', () => goToStep(2));
-        document.getElementById('prev-4').addEventListener('click', () => goToStep(3));
-        skipButton.addEventListener('click', () => goToStep(4));
-        calculateButton.addEventListener('click', processCalculations);
-        newCalculationButton.addEventListener('click', resetCalculator);
-
-        // Helper Functions
-        function goToStep(step) {
-            // Hide current step
-            document.querySelector(`.step-content.active`).classList.remove('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Таблица соответствия букв русского алфавита числам (пифагорейская система)
+            const letterValues = {
+                'А': 1, 'И': 1, 'С': 1, 'Ъ': 1,
+                'Б': 2, 'Й': 2, 'Т': 2, 'Ы': 2,
+                'В': 3, 'К': 3, 'У': 3, 'Ь': 3,
+                'Г': 4, 'Л': 4, 'Ф': 4, 'Э': 4,
+                'Д': 5, 'М': 5, 'Х': 5, 'Ю': 5,
+                'Е': 6, 'Н': 6, 'Ц': 6, 'Я': 6,
+                'Ё': 7, 'О': 7, 'Ч': 7,
+                'Ж': 8, 'П': 8, 'Ш': 8, 'Щ': 9,
+                'З': 9, 'Р': 9,
+                'а': 1, 'и': 1, 'с': 1, 'ъ': 1,
+                'б': 2, 'й': 2, 'т': 2, 'ы': 2,
+                'в': 3, 'к': 3, 'у': 3, 'ь': 3,
+                'г': 4, 'л': 4, 'ф': 4, 'э': 4,
+                'д': 5, 'м': 5, 'х': 5, 'ю': 5,
+                'е': 6, 'н': 6, 'ц': 6, 'я': 6,
+                'ё': 7, 'о': 7, 'ч': 7,
+                'ж': 8, 'п': 8, 'ш': 8, 'щ': 9,
+                'з': 9, 'р': 9
+            };
             
-            // Show new step
-            document.getElementById(`step-${step}`).classList.add('active');
-            
-            // Update progress bar
-            updateProgressBar(step);
-            
-            // Update current step
-            currentStep = step;
-        }
-
-        function updateProgressBar(step) {
-            // Update progress bar width
-            const progressWidth = ((step - 1) / 3) * 100; // 4 steps, but progress between them
-            progressBar.style.width = `${progressWidth}%`;
-            
-            // Update step indicators
-            steps.forEach(s => {
-                const stepNum = parseInt(s.getAttribute('data-step'));
-                s.classList.remove('active', 'completed');
+            // Функция для сокращения числа до однозначного (с учетом мастер-чисел)
+            function reduceToSingleDigit(num) {
+                // Мастер-числа не сокращаем
+                if (num === 11 || num === 22 || num === 33) {
+                    return num;
+                }
                 
-                if (stepNum < step) {
-                    s.classList.add('completed');
-                } else if (stepNum === step) {
-                    s.classList.add('active');
-                }
-            });
-        }
-
-        function resetCalculator() {
-            // Reset state variables
-            currentStep = 1;
-            birthDate = '';
-            fullName = '';
-            birthTime = '';
-            birthPlace = '';
-            partnerBirthDate = '';
-            partnerFullName = '';
-            results = null;
-            vedicGridData = [];
-            personalYear = null;
-            compatibilityResult = null;
-            luckyNumbers = null;
-            
-            // Reset form inputs
-            birthDateInput.value = '';
-            fullNameInput.value = '';
-            birthTimeInput.value = '';
-            birthPlaceInput.value = '';
-            partnerBirthDateInput.value = '';
-            partnerFullNameInput.value = '';
-            
-            // Reset UI
-            document.getElementById('next-1').disabled = true;
-            document.getElementById('next-2').disabled = true;
-            
-            // Show first step, hide results
-            resultsContainer.classList.remove('active');
-            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('step-1').classList.add('active');
-            
-            // Reset progress bar
-            updateProgressBar(1);
-        }
-
-        // Calculation Functions
-        function reduceToSingleDigit(str, trackKarmic = false) {
-            let sum = 0;
-            let karmicDebts = [];
-            
-            // Sum all digits
-            for (const char of str) {
-                if (!isNaN(char) && char !== ' ') {
-                    sum += parseInt(char);
-                }
-            }
-            
-            // Track intermediate sums for karmic debts if requested
-            if (trackKarmic) {
-                let current = sum;
-                while (current >= 10) {
-                    if ([13, 14, 16, 19].includes(current)) {
-                        karmicDebts.push(current);
+                // Сокращаем до однозначного числа
+                while (num > 9) {
+                    num = num.toString().split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+                    
+                    // Проверяем, не получилось ли мастер-число после сокращения
+                    if (num === 11 || num === 22 || num === 33) {
+                        break;
                     }
-                    current = current.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
                 }
-            }
-            
-            // Final reduction to single digit
-            while (sum >= 10) {
-                sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-            }
-            
-            return trackKarmic ? { number: sum, karmicDebts } : sum;
-        }
-
-        function calculateSoulNumber(date) {
-            // Extract day from YYYY-MM-DD
-            const day = date.split('-')[2];
-            return reduceToSingleDigit(day, true);
-        }
-
-        function calculateDestinyNumber(date) {
-            const cleanDate = date.replace(/\D/g, '');
-            return reduceToSingleDigit(cleanDate, true);
-        }
-
-        function calculateNameNumber(name) {
-            const cleanName = name.replace(/[^а-яА-Я]/g, '').toUpperCase();
-            let sum = 0;
-            let karmicDebts = [];
-            
-            for (const char of cleanName) {
-                if (letterMap[char]) {
-                    sum += letterMap[char];
-                }
-            }
-            
-            // Check intermediate sums for karmic debts
-            let current = sum;
-            while (current >= 10) {
-                if ([13, 14, 16, 19].includes(current)) {
-                    karmicDebts.push(current);
-                }
-                current = current.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-            }
-            
-            // Final reduction
-            while (sum >= 10) {
-                sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
-            }
-            
-            return { number: sum, karmicDebts };
-        }
-
-        function calculateHeartDesire(name) {
-            const cleanName = name.replace(/[^а-яА-Я]/g, '').toUpperCase();
-            let sum = 0;
-            
-            for (const char of cleanName) {
-                if (vowels.includes(char) && letterMap[char]) {
-                    sum += letterMap[char];
-                }
-            }
-            
-            return reduceToSingleDigit(sum.toString());
-        }
-
-        function calculatePersonality(name) {
-            const cleanName = name.replace(/[^а-яА-Я]/g, '').toUpperCase();
-            let sum = 0;
-            
-            for (const char of cleanName) {
-                if (!vowels.includes(char) && letterMap[char]) {
-                    sum += letterMap[char];
-                }
-            }
-            
-            return reduceToSingleDigit(sum.toString());
-        }
-
-        function calculateVedicGrid(date, name) {
-            const cleanDate = date.replace(/\D/g, '');
-            const cleanName = name.replace(/[^а-яА-Я]/g, '').toUpperCase();
-            
-            // Initialize grid with zeros for digits 1-9
-            const grid = Array(9).fill(0);
-            
-            // Process date digits
-            for (const char of cleanDate) {
-                const digit = parseInt(char);
-                if (digit >= 1 && digit <= 9) {
-                    grid[digit - 1]++;
-                }
-            }
-            
-            // Process name letters
-            for (const char of cleanName) {
-                if (letterMap[char]) {
-                    const digit = letterMap[char];
-                    grid[digit - 1]++;
-                }
-            }
-            
-            // Format for display
-            return grid.map((count, index) => ({
-                digit: (index + 1).toString(),
-                count,
-                planet: getPlanetName(index + 1)
-            }));
-        }
-
-        function getPlanetName(digit) {
-            const planets = {
-                1: 'Солнце (Сурья)', 
-                2: 'Луна (Чандра)', 
-                3: 'Юпитер (Гуру)', 
-                4: 'Раху', 
-                5: 'Меркурий (Будха)', 
-                6: 'Венера (Шукра)', 
-                7: 'Кету', 
-                8: 'Сатурн (Шани)', 
-                9: 'Марс (Мангала)'
-            };
-            return planets[digit] || '';
-        }
-
-        function calculatePersonalYear(destinyNumber) {
-            const yearDigits = currentDateTime.getFullYear().toString().split('').map(Number);
-            const yearSum = yearDigits.reduce((a, b) => a + b, 0);
-            let sum = destinyNumber + yearSum;
-            
-            return reduceToSingleDigit(sum.toString());
-        }
-
-        function calculatePersonalMonth(personalYear) {
-            const month = currentDateTime.getMonth() + 1; // Months are 0-indexed
-            let sum = personalYear + month;
-            
-            return reduceToSingleDigit(sum.toString());
-        }
-
-        function calculateCompatibility(userDestiny, partnerDestiny) {
-            // Compatibility based on Vedic principles from sources
-            const friendlyPairs = [
-                [1, 3], [1, 9], [3, 9], // Sun group
-                [2, 7], // Moon and Ketu
-                [6, 9], // Venus and Mars
-                [4, 8]  // Rahu and Saturn
-            ];
-            
-            const challengingPairs = [
-                [1, 4], [1, 8], // Sun vs Rahu/Saturn
-                [2, 8], // Moon vs Saturn
-                [5, 9], // Mercury vs Mars
-                [3, 4], // Jupiter vs Rahu
-                [6, 8]  // Venus vs Saturn
-            ];
-            
-            const sameNumber = userDestiny === partnerDestiny;
-            const isFriendly = friendlyPairs.some(pair => 
-                (pair[0] === userDestiny && pair[1] === partnerDestiny) || 
-                (pair[1] === userDestiny && pair[0] === partnerDestiny)
-            );
-            const isChallenging = challengingPairs.some(pair => 
-                (pair[0] === userDestiny && pair[1] === partnerDestiny) || 
-                (pair[1] === userDestiny && pair[0] === partnerDestiny)
-            );
-            
-            if (sameNumber) return { 
-                type: 'Незавершенная кармическая задача', 
-                description: 'Ваши Числа Судьбы совпадают. Это указывает на незавершенную кармическую задачу из прошлых жизней, которую нужно проработать вместе в этой жизни.',
-                className: 'challenging'
-            };
-            if (isFriendly) return { 
-                type: 'Гармоничная совместимость', 
-                description: 'Ваши энергии дополняют друг друга, создавая баланс и взаимопонимание. Отношения будут легкими и поддерживающими.',
-                className: 'strong'
-            };
-            if (isChallenging) return { 
-                type: 'Кармический урок', 
-                description: 'Ваши энергии создают напряжение, но это возможность для роста через преодоление вызовов. Требуется терпение и компромиссы.',
-                className: 'challenging'
-            };
-            return { 
-                type: 'Нейтральная совместимость', 
-                description: 'Ваши энергии не конфликтуют, но и не усиливают друг друга. Успех зависит от ваших усилий и взаимопонимания.',
-                className: 'neutral'
-            };
-        }
-
-        function generateLuckyNumbers(soulNumber, destinyNumber, vedicGrid) {
-            // Find strongest and weakest numbers from Vedic Grid
-            const strongestDigit = vedicGrid.reduce((max, item) => item.count > max.count ? item : max, vedicGrid[0]).digit;
-            const weakestDigit = vedicGrid.reduce((min, item) => item.count < min.count ? item : min, vedicGrid[0]).digit;
-            
-            // Career recommendations based on sources
-            const careerNumbers = [1, 3, 8].includes(parseInt(strongestDigit)) ? 
-                strongestDigit : [1, 3, 8].includes(destinyNumber) ? destinyNumber.toString() : '1, 3, 8';
-            
-            // Health recommendations
-            const healthNumbers = [2, 6].includes(parseInt(strongestDigit)) ? 
-                strongestDigit : [2, 6].includes(soulNumber) ? soulNumber.toString() : '2, 6';
-            
-            // Relationship recommendations
-            const relationshipNumbers = [2, 6, 9].includes(parseInt(strongestDigit)) ? 
-                strongestDigit : [2, 6, 9].includes(destinyNumber) ? destinyNumber.toString() : '2, 6, 9';
-            
-            return {
-                strongest: strongestDigit,
-                weakest: weakestDigit,
-                career: careerNumbers,
-                health: healthNumbers,
-                relationships: relationshipNumbers
-            };
-        }
-
-        function getMythDescription(number) {
-            const myths = {
-                1: "Сурья (Солнце) — бог света и жизни. Он дарует лидерство, власть и признание. Сурья управляет воскресеньем и носит рубин.",
-                2: "Чандра (Луна) — бог эмоций и ума. Она дарует чувствительность, интуицию и плодородие. Чандра управляет понедельником и носит жемчуг.",
-                3: "Гуру (Юпитер) — учитель богов. Он дарует мудрость, удачу и духовный рост. Гуру управляет четвергом и носит желтый сапфир.",
-                4: "Раху — северный лунный узел. Он дарует необычные события, технологии и перемены. Раху связан со средой и носит гессонит.",
-                5: "Будха (Меркурий) — бог коммуникации. Он дарует острый ум, обучение и торговлю. Будха управляет средой и носит изумруд.",
-                6: "Шукра (Венера) — учитель асуров. Она дарует любовь, красоту и гармонию. Шукра управляет пятницей и носит алмаз.",
-                7: "Кету — южный лунный узел. Он дарует духовность, интуицию и прошлые знания. Кету связан со вторником и носит кошачий глаз.",
-                8: "Шани (Сатурн) — бог справедливости. Он дарует дисциплину, труд и долголетие. Шани управляет субботой и носит сапфир.",
-                9: "Мангала (Марс) — бог войны. Он дарует энергию, смелость и защиту. Мангала управляет вторником и носит красный коралл."
-            };
-            return myths[number] || "";
-        }
-
-        function getExaltationNote(number, rawSum) {
-            // Exaltation numbers based on sources
-            const exaltations = {
-                1: [10, 19, 28, 37, 46, 55, 64, 73, 82, 91],
-                2: [11, 20, 29, 38, 47, 56, 65, 74, 83, 92],
-                3: [12, 21, 30, 39, 48, 57, 66, 75, 84, 93],
-                4: [13, 22, 31, 40, 49, 58, 67, 76, 85, 94],
-                5: [14, 23, 32, 41, 50, 59, 68, 77, 86, 95],
-                6: [15, 24, 33, 42, 51, 60, 69, 78, 87, 96],
-                7: [16, 25, 34, 43, 52, 61, 70, 79, 88, 97],
-                8: [17, 26, 35, 44, 53, 62, 71, 80, 89, 98],
-                9: [18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
-            };
-            
-            if (exaltations[number] && exaltations[number].includes(rawSum)) {
-                return `Ваше число ${number} получено из ${rawSum} — это экзальтация ${getPlanetName(number).split(' ')[0]}. Это усиливает качества этого числа и указывает на особую кармическую миссию.`;
-            }
-            return null;
-        }
-
-        function renderPlanetDescription(digit) {
-            const descriptions = {
-                '1': 'Лидерство и индивидуальность. Вы рождены, чтобы быть в центре внимания, брать инициативу и проявлять свою уникальную личность. Ваша сила — в решимости и способности вести за собой.',
-                '2': 'Чувствительность и сотрудничество. Вы обладаете тонкой интуицией и высокой эмпатией. Вам легко налаживать отношения и работать в команде, но вы можете быть слишком зависимы от мнения других.',
-                '3': 'Творчество и общение. Ваш ум остр и жив, вы любите делиться идеями и выражать себя через слова, музыку или искусство. Вы притягиваете удачу и радость в свою жизнь.',
-                '4': 'Стабильность и труд. Вы цените порядок, структуру и надёжность. Ваша сила — в усердии, трудолюбии и способности создавать прочные основы для будущего.',
-                '5': 'Свобода и адаптивность. Вы любите перемены, новые впечатления и путешествия. Ваш ум гибок, вы легко адаптируетесь к новым условиям, но можете испытывать трудности с концентрацией.',
-                '6': 'Гармония и забота. Вы обладаете тонким вкусом, любите красоту и создаёте уют вокруг себя. Вы заботитесь о близких и стремитесь к гармонии во всём, что вас окружает.',
-                '7': 'Анализ и духовность. Вы склонны к глубокому размышлению, анализу и поиску смысла. Вам интересны тайны, наука и духовные практики. Вы можете быть немного отстранённым от повседневной суеты.',
-                '8': 'Власть и материальный успех. Вы обладаете сильной волей, дисциплиной и способностью к управлению ресурсами. Ваша цель — достижение стабильности, власти и материального благополучия.',
-                '9': 'Энергия и служение. Вы полны энергии, решимости и смелости. Вы готовы браться за сложные задачи и бороться за справедливость. Ваша сила — в действии и служении другим.'
-            };
-            return descriptions[digit] || '';
-        }
-
-        function processCalculations() {
-            if (!birthDate) return;
-            
-            // Calculate Soul Number (day of birth)
-            const soulResult = calculateSoulNumber(birthDate);
-            
-            // Calculate Destiny Number (full date)
-            const destinyResult = calculateDestinyNumber(birthDate);
-            
-            // Calculate Name Number if name is provided
-            const nameResult = fullName ? calculateNameNumber(fullName) : null;
-            const heartDesire = fullName ? calculateHeartDesire(fullName) : null;
-            const personality = fullName ? calculatePersonality(fullName) : null;
-            
-            // Calculate Vedic Grid if name is provided
-            let gridData = [];
-            if (fullName) {
-                gridData = calculateVedicGrid(birthDate, fullName);
-                vedicGridData = gridData;
-            }
-            
-            // Calculate Personal Year and Month based on Destiny Number
-            const pYear = calculatePersonalYear(destinyResult.number);
-            const pMonth = calculatePersonalMonth(pYear);
-            personalYear = { year: pYear, month: pMonth };
-            
-            // Calculate lucky numbers if possible
-            if (fullName && gridData.length > 0) {
-                luckyNumbers = generateLuckyNumbers(
-                    soulResult.number, 
-                    destinyResult.number, 
-                    gridData
-                );
-            }
-            
-            // Set results
-            results = {
-                soulNumber: soulResult.number,
-                destinyNumber: destinyResult.number,
-                nameNumber: nameResult?.number || null,
-                heartDesire,
-                personality,
-                karmicDebts: [...new Set([...soulResult.karmicDebts, ...destinyResult.karmicDebts, ...(nameResult?.karmicDebts || [])])],
-                soulRaw: parseInt(birthDate.split('-')[2]), // Day of birth
-                destinyRaw: parseInt(birthDate.replace(/\D/g, '')) // Full date as number
-            };
-            
-            // Calculate compatibility if partner data is provided
-            if (partnerBirthDate && birthDate) {
-                const partnerDestiny = calculateDestinyNumber(partnerBirthDate).number;
-                compatibilityResult = calculateCompatibility(results.destinyNumber, partnerDestiny);
-                compatibilityResult.partnerDestiny = partnerDestiny;
-            }
-            
-            // Render results
-            renderResults();
-            
-            // Show results view
-            stepContents.forEach(el => el.classList.remove('active'));
-            resultsContainer.classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        function renderResults() {
-            // Render Personal Numbers
-            const personalNumbersContainer = document.getElementById('personal-numbers');
-            personalNumbersContainer.innerHTML = `
-                <div class="number-card">
-                    <div class="number-value">${results.soulNumber}</div>
-                    <h3 class="number-title">Число Души</h3>
-                    <p class="number-description">Отражает внутреннюю суть, характер, кармические задачи из прошлых жизней. Активно в первой половине жизни (до ~36-40 лет).</p>
-                </div>
-                <div class="number-card">
-                    <div class="number-value">${results.destinyNumber}</div>
-                    <h3 class="number-title">Число Судьбы</h3>
-                    <p class="number-description">Кармическая программа текущего воплощения — то, к чему человек должен прийти. Активизируется во второй половине жизни.</p>
-                </div>
-                ${results.nameNumber ? `
-                <div class="number-card">
-                    <div class="number-value">${results.nameNumber}</div>
-                    <h3 class="number-title">Число Имени</h3>
-                    <p class="number-description">Отражает социальный имидж, репутацию, способ взаимодействия с миром. Влияет на карьеру и восприятие окружающими.</p>
-                </div>` : ''}
-                ${results.heartDesire ? `
-                <div class="number-card">
-                    <div class="number-value">${results.heartDesire}</div>
-                    <h3 class="number-title">Сердечное Число</h3>
-                    <p class="number-description">Внутренние мотивации, скрытые желания, истинные потребности и внутренняя сторона личности.</p>
-                </div>` : ''}
-                ${results.personality ? `
-                <div class="number-card">
-                    <div class="number-value">${results.personality}</div>
-                    <h3 class="number-title">Личное Число</h3>
-                    <p class="number-description">Ваша внешняя личность, социальный образ, манеры и поведение в обществе.</p>
-                </div>` : ''}
-            `;
-            
-            // Render Karmic Debts if any
-            const karmicDebtsContainer = document.getElementById('karmic-debts');
-            const karmicNumbersContainer = document.getElementById('karmic-numbers');
-            
-            if (results.karmicDebts.length > 0) {
-                karmicDebtsContainer.style.display = 'block';
-                karmicNumbersContainer.innerHTML = results.karmicDebts.map(debt => 
-                    `<span class="karmic-number">${debt}</span>`
-                ).join('');
-            } else {
-                karmicDebtsContainer.style.display = 'none';
-            }
-            
-            // Render Exaltation Note if applicable
-            const exaltationNoteContainer = document.getElementById('exaltation-note');
-            const soulExaltation = getExaltationNote(results.soulNumber, results.soulRaw);
-            const destinyExaltation = getExaltationNote(results.destinyNumber, results.destinyRaw);
-            
-            if (soulExaltation || destinyExaltation) {
-                exaltationNoteContainer.style.display = 'block';
-                exaltationNoteContainer.innerHTML = `
-                    ${soulExaltation ? `<p><strong>Число Души:</strong> ${soulExaltation}</p>` : ''}
-                    ${destinyExaltation ? `<p><strong>Число Судьбы:</strong> ${destinyExaltation}</p>` : ''}
-                `;
-            } else {
-                exaltationNoteContainer.style.display = 'none';
-            }
-            
-            // Render Myth Section
-            const mythContentContainer = document.getElementById('myth-content');
-            mythContentContainer.innerHTML = `
-                ${getMythDescription(results.soulNumber)}<br>
-                ${getMythDescription(results.destinyNumber)}<br>
-                ${results.nameNumber ? getMythDescription(results.nameNumber) : ''}
-            `;
-            
-            // Render Vedic Grid if available
-            if (vedicGridData.length > 0) {
-                document.getElementById('vedic-grid-section').style.display = 'block';
                 
-                // Render bar chart
-                const barChartContainer = document.getElementById('bar-chart');
-                barChartContainer.innerHTML = vedicGridData.map((item, index) => `
-                    <div class="bar" style="height: ${(item.count / Math.max(5, Math.max(...vedicGridData.map(i => i.count)))) * 80}%">
-                        <div class="bar-value">${item.count}</div>
-                        <div class="bar-label">${item.digit}</div>
-                    </div>
-                `).join('');
-                
-                // Render grid items
-                const gridContainer = document.getElementById('grid-container');
-                gridContainer.innerHTML = vedicGridData.map(item => `
-                    <div class="grid-item ${item.count > 3 ? 'strong' : item.count === 0 ? 'weak' : ''}">
-                        <div class="grid-header">
-                            <div class="grid-digit">${item.digit}</div>
-                            <div>
-                                <div class="grid-planet">${item.planet}</div>
-                                <div class="grid-count">Частота: ${item.count}</div>
-                            </div>
-                        </div>
-                        <p class="grid-description">${renderPlanetDescription(item.digit)}</p>
-                    </div>
-                `).join('');
+                return num;
             }
             
-            // Render Time Cycles
-            if (personalYear) {
-                document.getElementById('time-cycles-section').style.display = 'block';
+            // Функция для расчета числа из даты рождения
+            function calculateBirthNumber(day, month, year) {
+                // Складываем все цифры даты рождения
+                const dayStr = day.toString().padStart(2, '0');
+                const monthStr = month.toString().padStart(2, '0');
+                const yearStr = year.toString();
                 
-                const timeCyclesContainer = document.getElementById('time-cycles');
-                timeCyclesContainer.innerHTML = `
-                    <div class="cycle-card">
-                        <div class="cycle-value">${personalYear.year}</div>
-                        <h3 class="cycle-title">Личный Год (${currentDateTime.getFullYear()})</h3>
-                        <p class="cycle-description">
-                            ${getYearDescription(personalYear.year)}
-                        </p>
-                    </div>
-                    <div class="cycle-card">
-                        <div class="cycle-value">${personalYear.month}</div>
-                        <h3 class="cycle-title">Личный Месяц (${currentDateTime.toLocaleString('ru-RU', { month: 'long' })})</h3>
-                        <p class="cycle-description">
-                            ${getMonthDescription(personalYear.month)}
-                        </p>
-                    </div>
-                `;
-                
-                // Show/hide Vimshottari note based on birth time and place
-                const vimshottariNote = document.getElementById('vimshottari-note');
-                if (birthTime && birthPlace) {
-                    vimshottariNote.innerHTML = `
-                        <h3 class="vimshottari-title">Система Вимшоттари Даша</h3>
-                        <p class="chart-subtitle">
-                            На основе ваших данных о времени и месте рождения можно рассчитать планетарные периоды Вимшоттари Даша. 
-                            Этот продвинутый анализ требует астрономических вычислений и доступен в полной версии калькулятора.
-                            Текущий период: <span class="lucky-highlight">Махадаша Юпитера (Число 3)</span> - период удачи, мудрости и духовного роста.
-                        </p>
-                    `;
+                let sum = 0;
+                for (const char of dayStr + monthStr + yearStr) {
+                    sum += parseInt(char, 10);
                 }
+                
+                return reduceToSingleDigit(sum);
             }
             
-            // Render Compatibility
-            if (compatibilityResult) {
-                document.getElementById('compatibility-section').style.display = 'block';
+            // Функция для расчета числа из имени
+            function calculateNameNumber(name) {
+                let sum = 0;
                 
-                const compatibilityContainer = document.getElementById('compatibility-result');
-                compatibilityContainer.innerHTML = `
-                    <div class="compatibility-numbers">
-                        Ваше Число Судьбы: <span class="lucky-highlight">${results.destinyNumber}</span>
-                        vs
-                        Число Судьбы партнера: <span class="lucky-highlight">${compatibilityResult.partnerDestiny}</span>
-                    </div>
-                    
-                    <div class="compatibility-type ${compatibilityResult.className}">
-                        ${compatibilityResult.type}
-                    </div>
-                    
-                    <p class="compatibility-description">
-                        ${compatibilityResult.description}
-                    </p>
-                    
-                    <div class="compatibility-recommendations">
-                        <h3 class="recommendations-title">Рекомендации</h3>
-                        <p class="chart-subtitle">
-                            ${getCompatibilityRecommendations(compatibilityResult.type)}
-                        </p>
-                    </div>
-                `;
+                // Проходим по каждой букве имени
+                for (const char of name) {
+                    if (letterValues[char]) {
+                        sum += letterValues[char];
+                    }
+                }
+                
+                return reduceToSingleDigit(sum);
             }
             
-            // Render Lucky Numbers
-            if (luckyNumbers) {
-                document.getElementById('lucky-section').style.display = 'block';
+            // Функция для расчета числа из гласных букв имени
+            function calculateVowelNumber(name) {
+                const vowels = 'АЕЁИОУЫЭЮЯаеёиоуыэюя';
+                let sum = 0;
                 
-                const luckyGridContainer = document.getElementById('lucky-grid');
-                luckyGridContainer.innerHTML = `
-                    <div class="lucky-card">
-                        <div class="lucky-icon">💼</div>
-                        <h3 class="lucky-title">Карьера и Финансы</h3>
-                        <p class="chart-subtitle">
-                            Ваши сильные числа: <span class="lucky-highlight">${luckyNumbers.strongest}</span>
-                            ${luckyNumbers.strongest !== luckyNumbers.weakest ? ` | Слабые числа: <span class="lucky-weak">${luckyNumbers.weakest}</span>` : ''}
-                        </p>
-                        <p class="chart-subtitle">
-                            Для усиления карьеры используйте числа: <span class="lucky-highlight">${luckyNumbers.career}</span>.
-                            Выбирайте даты для важных встреч, презентаций и переговоров, содержащие эти числа.
-                            Для развития недостающих качеств (организация, системность) используйте число ${luckyNumbers.weakest}.
-                        </p>
-                    </div>
-                    
-                    <div class="lucky-card">
-                        <div class="lucky-icon">❤️</div>
-                        <h3 class="lucky-title">Здоровье</h3>
-                        <p class="chart-subtitle">
-                            Ключевые числа для здоровья: <span class="lucky-highlight">${luckyNumbers.health}</span>
-                        </p>
-                        <p class="chart-subtitle">
-                            Для поддержания здоровья и эмоционального баланса используйте числа ${luckyNumbers.health}.
-                            Назначайте медицинские процедуры, начинайте программы оздоровления и практики самопознания в дни, связанные с этими числами.
-                            Избегайте стрессовых ситуаций в периоды, когда доминируют неблагоприятные числа.
-                        </p>
-                    </div>
-                    
-                    <div class="lucky-card">
-                        <div class="lucky-icon">💑</div>
-                        <h3 class="lucky-title">Отношения и Любовь</h3>
-                        <p class="chart-subtitle">
-                            Гармонизирующие числа: <span class="lucky-highlight">${luckyNumbers.relationships}</span>
-                        </p>
-                        <p class="chart-subtitle">
-                            Для укрепления отношений и привлечения любви используйте числа ${luckyNumbers.relationships}.
-                            Назначайте свидания, важные разговоры и романтические события на даты, содержащие эти числа.
-                            Для глубокой эмоциональной связи развивайте качества, связанные с числом ${luckyNumbers.strongest}.
-                        </p>
-                    </div>
-                `;
+                for (const char of name) {
+                    if (vowels.includes(char) && letterValues[char]) {
+                        sum += letterValues[char];
+                    }
+                }
+                
+                return reduceToSingleDigit(sum);
             }
-        }
-
-        function getYearDescription(year) {
-            const descriptions = {
-                1: "Год новых начинаний, лидерства и независимости. Отличное время для запуска проектов и принятия решений.",
-                2: "Год сотрудничества, чувствительности и интуиции. Фокус на отношениях, семье и эмоциональном балансе.",
-                3: "Год творчества, общения и социальной активности. Благоприятное время для самовыражения и финансового роста.",
-                4: "Год стабильности, труда и системности. Время закладывать прочные основы и работать над долгосрочными целями.",
-                5: "Год перемен, свободы и приключений. Отличное время для путешествий, обучения и новых впечатлений.",
-                6: "Год гармонии, любви и ответственности. Фокус на семье, отношениях и создании уюта.",
-                7: "Год анализа, духовности и самопознания. Время для отдыха, размышлений и поиска глубокого смысла.",
-                8: "Год власти, материального успеха и карьерного роста. Благоприятное время для финансовых операций.",
-                9: "Год завершения циклов, служения и сострадания. Время подводить итоги и готовиться к новому этапу."
-            };
-            return descriptions[year] || "";
-        }
-
-        function getMonthDescription(month) {
-            const descriptions = {
-                1: "Месяц инициативы, новых начинаний и лидерства. Отличное время для запуска важных проектов.",
-                2: "Месяц сотрудничества, чувствительности и интуиции. Фокус на отношениях и эмоциональном балансе.",
-                3: "Месяц творчества, общения и социальной активности. Благоприятное время для самовыражения.",
-                4: "Месяц стабильности, труда и системности. Время закладывать прочные основы.",
-                5: "Месяц перемен, свободы и приключений. Отличное время для путешествий и новых впечатлений.",
-                6: "Месяц гармонии, любви и ответственности. Фокус на семье и отношениях.",
-                7: "Месяц анализа, духовности и самопознания. Время для отдыха и размышлений.",
-                8: "Месяц власти, материального успеха и карьерного роста. Благоприятное время для финансовых операций.",
-                9: "Месяц завершения циклов, служения и сострадания. Время подводить итоги."
-            };
-            return descriptions[month] || "";
-        }
-
-        function getCompatibilityRecommendations(type) {
-            if (type.includes('Незавершенная')) {
-                return "Ваши совпадающие Числа Судьбы указывают на глубокую кармическую связь. Работайте вместе над общей миссией, но будьте внимательны к повторяющимся паттернам из прошлого.";
-            } else if (type.includes('Гармоничная')) {
-                return "Ваши энергии прекрасно дополняют друг друга. Инвестируйте в совместные проекты и духовное развитие. Поддерживайте друг друга в трудные моменты.";
-            } else if (type.includes('Кармический')) {
-                return "Отношения потребуют терпения и компромиссов. Работайте над коммуникацией и взаимопониманием. Этот союз даст мощный толчок для духовного роста обоих.";
-            } else {
-                return "Ваши отношения будут зависеть от ваших усилий. Найдите общие интересы и ценности. Уделяйте внимание качественному времени вместе и открытому общению.";
+            
+            // Функция для расчета числа из согласных букв имени
+            function calculateConsonantNumber(name) {
+                const vowels = 'АЕЁИОУЫЭЮЯаеёиоуыэюя';
+                let sum = 0;
+                
+                for (const char of name) {
+                    if (!vowels.includes(char) && letterValues[char]) {
+                        sum += letterValues[char];
+                    }
+                }
+                
+                return reduceToSingleDigit(sum);
             }
-        }
-
-        // Initialize the calculator
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set today's date as max for date inputs
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                input.max = "2026-12-31"; // Fixed to knowledge cutoff year
+            
+            // Функция для расчета числа внутренней сущности (без первой и последней буквы)
+            function calculateInnerEssence(name) {
+                if (name.length <= 2) return 0;
+                
+                const innerName = name.substring(1, name.length - 1);
+                return calculateNameNumber(innerName);
+            }
+            
+            // Функция для расчета числа дня рождения
+            function calculateBirthDayNumber(day) {
+                return reduceToSingleDigit(day);
+            }
+            
+            // Функция для расчета числа развития
+            function calculateDevelopmentNumber(lifePath, birthDay) {
+                let result = lifePath - birthDay;
+                
+                // Если результат <= 0, прибавляем 9
+                while (result <= 0) {
+                    result += 9;
+                }
+                
+                return reduceToSingleDigit(result);
+            }
+            
+            // Функция для расчета числа личного года
+            function calculatePersonalYear(lifePath, year) {
+                // Складываем цифры года и число жизненного пути
+                let yearSum = 0;
+                for (const char of year.toString()) {
+                    yearSum += parseInt(char, 10);
+                }
+                
+                return reduceToSingleDigit(yearSum + lifePath);
+            }
+            
+            // Функция для расчета числа партнерства
+            function calculatePartnershipNumber(lifePath1, lifePath2) {
+                return reduceToSingleDigit(lifePath1 + lifePath2);
+            }
+            
+            // Функция для форматирования даты
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const day = date.getDate();
+                const month = date.toLocaleString('ru-RU', { month: 'long' });
+                const year = date.getFullYear();
+                return `${day} ${month} ${year} года`;
+            }
+            
+            // Функция для получения описания числа
+            function getNumberDescription(number, calculationType) {
+                const descriptions = {
+                    lifePath: {
+                        1: "Лидерство, независимость, инициативность. Вы прирожденный лидер, который любит быть первым и брать на себя ответственность.",
+                        2: "Дипломатия, сотрудничество, чувствительность. Вы обладаете даром примирять конфликты и находить компромиссы.",
+                        3: "Творчество, оптимизм, самовыражение. Вы обаятельны, общительны и обладаете ярким творческим потенциалом.",
+                        4: "Стабильность, практичность, трудолюбие. Вы надежны, организованны и цените порядок во всем.",
+                        5: "Свобода, приключения, адаптивность. Вы любите перемены, путешествия и стремитесь к разнообразию в жизни.",
+                        6: "Гармония, ответственность, забота. Вы обладаете сильным чувством долга и стремитесь к гармонии в отношениях.",
+                        7: "Анализ, мудрость, интуиция. Вы глубокий мыслитель с развитой интуицией и стремлением к знаниям.",
+                        8: "Власть, амбиции, материальный успех. Вы обладаете деловой хваткой и стремитесь к финансовой независимости.",
+                        9: "Гуманизм, сострадание, завершение. Вы идеалист с широким кругозором и стремлением служить человечеству.",
+                        11: "Интуиция, вдохновение, духовность. Вы обладаете мощным интуитивным даром и способны вдохновлять других.",
+                        22: "Мастер-строитель, практичная мудрость. Вы способны воплощать грандиозные идеи в реальность и создавать долговечные структуры.",
+                        33: "Мастер-учитель, безусловная любовь. Вы обладаете даром исцеления и способны нести свет и любовь в мир."
+                    },
+                    destiny: {
+                        1: "Ваша судьба связана с лидерством и независимостью. Вы призваны прокладывать новые пути и вдохновлять других своей силой воли.",
+                        2: "Ваша судьба — быть посредником и дипломатом. Вы способны создавать гармонию в отношениях и помогать другим находить общий язык.",
+                        3: "Ваша судьба связана с творчеством и самовыражением. Вы призваны радовать мир своим талантом и оптимизмом.",
+                        4: "Ваша судьба — создавать прочный фундамент. Вы призваны трудиться усердно и создавать стабильность для себя и других.",
+                        5: "Ваша судьба — быть свободным исследователем. Вы призваны пробовать новое, адаптироваться к изменениям и вдохновлять других на перемены.",
+                        6: "Ваша судьба связана с ответственностью и заботой. Вы призваны создавать гармонию в семье и обществе, помогая нуждающимся.",
+                        7: "Ваша судьба — искать истину и мудрость. Вы призваны развивать интеллект и интуицию, делясь знаниями с другими.",
+                        8: "Ваша судьба связана с материальным успехом и властью. Вы призваны управлять ресурсами и создавать процветание.",
+                        9: "Ваша судьба — служить человечеству. Вы призваны проявлять сострадание и помогать миру стать лучше.",
+                        11: "Ваша судьба — быть духовным проводником. Вы призваны вдохновлять других и нести свет в темные места.",
+                        22: "Ваша судьба — быть мастером-строителем. Вы призваны воплощать грандиозные идеи, которые изменят мир к лучшему.",
+                        33: "Ваша судьба — быть учителем и целителем. Вы призваны нести безусловную любовь и исцелять других своим присутствием."
+                    },
+                    soul: {
+                        1: "Ваша душа стремится к независимости и лидерству. Вы хотите быть первым и иметь контроль над своей жизнью.",
+                        2: "Ваша душа жаждет гармонии и партнерства. Вы хотите чувствовать себя нужным и быть в близких отношениях с другими.",
+                        3: "Ваша душа стремится к радости и самовыражению. Вы хотите творить, веселиться и вдохновлять других.",
+                        4: "Ваша душа жаждет стабильности и порядка. Вы хотите создать прочный фундамент и жить предсказуемой жизнью.",
+                        5: "Ваша душа стремится к свободе и приключениям. Вы хотите испытать все радости жизни и никогда не останавливаться на достигнутом.",
+                        6: "Ваша душа жаждет любви и гармонии. Вы хотите заботиться о близких и создавать уют в семье.",
+                        7: "Ваша душа стремится к знаниям и пониманию. Вы хотите проникнуть в суть вещей и обрести мудрость.",
+                        8: "Ваша душа жаждет власти и материального успеха. Вы хотите быть финансово независимым и влиятельным.",
+                        9: "Ваша душа стремится к служению и состраданию. Вы хотите сделать мир лучше и помочь как можно большему числу людей.",
+                        11: "Ваша душа жаждет духовного пробуждения. Вы хотите вдохновлять других и нести свет в мир.",
+                        22: "Ваша душа стремится к воплощению великих идей. Вы хотите создавать что-то значимое и долговечное.",
+                        33: "Ваша душа жаждет безусловной любви и исцеления. Вы хотите помогать другим и нести свет в темные места."
+                    },
+                    personality: {
+                        1: "Вы производите впечатление лидера и независимого человека. Люди видят в вас силу, уверенность и решительность.",
+                        2: "Вы производите впечатление дипломата и миротворца. Люди видят в вас тактичность, деликатность и умение слушать.",
+                        3: "Вы производите впечатление обаятельного и творческого человека. Люди видят в вас оптимизм, жизнерадостность и харизму.",
+                        4: "Вы производите впечатление надежного и практичного человека. Люди видят в вас стабильность, организованность и трудолюбие.",
+                        5: "Вы производите впечатление свободолюбивого и энергичного человека. Люди видят в вас адаптивность, любознательность и харизму.",
+                        6: "Вы производите впечатление заботливого и ответственного человека. Люди видят в вас надежность, гармоничность и чувство долга.",
+                        7: "Вы производите впечатление загадочного и мудрого человека. Люди видят в вас глубину, интеллект и интуицию.",
+                        8: "Вы производите впечатление амбициозного и авторитетного человека. Люди видят в вас деловую хватку, уверенность и практичность.",
+                        9: "Вы производите впечатление благородного и гуманного человека. Люди видят в вас щедрость, сострадание и широкий кругозор.",
+                        11: "Вы производите впечатление вдохновляющего и интуитивного человека. Люди видят в вас духовность, харизму и необычные способности.",
+                        22: "Вы производите впечатление практичного визионера. Люди видят в вас мудрость, надежность и способность воплощать грандиозные идеи.",
+                        33: "Вы производите впечатление заботливого учителя. Люди видят в вас доброту, мудрость и исцеляющую энергию."
+                    }
+                };
+                
+                // Возвращаем описание для типа расчета и числа, или общее описание
+                if (descriptions[calculationType] && descriptions[calculationType][number]) {
+                    return descriptions[calculationType][number];
+                }
+                
+                // Общее описание для других расчетов
+                return `Число ${number} в этом расчете указывает на особые качества и потенциал, связанные с этой сферой жизни.`;
+            }
+            
+            // Обработчик кнопки расчета
+            document.getElementById('calculateBtn').addEventListener('click', function() {
+                // Получаем данные из формы
+                const birthdate = document.getElementById('birthdate').value;
+                const birthTime = document.getElementById('birthTime').value;
+                const birthPlace = document.getElementById('birthPlace').value;
+                const fullName = document.getElementById('fullName').value.trim();
+                const partnerBirthdate = document.getElementById('partnerBirthdate').value;
+                const partnerName = document.getElementById('partnerName').value.trim();
+                
+                // Валидация данных
+                if (!birthdate || !birthTime || !birthPlace || !fullName || !partnerBirthdate || !partnerName) {
+                    alert('Пожалуйста, заполните все поля формы');
+                    return;
+                }
+                
+                if (fullName.split(' ').length < 3) {
+                    alert('Пожалуйста, введите полное имя (ФИО)');
+                    return;
+                }
+                
+                if (partnerName.split(' ').length < 3) {
+                    alert('Пожалуйста, введите полное имя партнера (ФИО)');
+                    return;
+                }
+                
+                // Парсим дату рождения
+                const birthDateObj = new Date(birthdate);
+                const birthDay = birthDateObj.getDate();
+                const birthMonth = birthDateObj.getMonth() + 1;
+                const birthYear = birthDateObj.getFullYear();
+                
+                // Парсим дату рождения партнера
+                const partnerDateObj = new Date(partnerBirthdate);
+                const partnerDay = partnerDateObj.getDate();
+                const partnerMonth = partnerDateObj.getMonth() + 1;
+                const partnerYear = partnerDateObj.getFullYear();
+                
+                // Рассчитываем основные числа
+                const lifePath = calculateBirthNumber(birthDay, birthMonth, birthYear);
+                const birthDayNumber = calculateBirthDayNumber(birthDay);
+                const destinyNumber = calculateNameNumber(fullName);
+                const soulNumber = calculateVowelNumber(fullName);
+                const personalityNumber = calculateConsonantNumber(fullName);
+                const innerEssence = calculateInnerEssence(fullName);
+                
+                // Рассчитываем числа для партнера
+                const partnerLifePath = calculateBirthNumber(partnerDay, partnerMonth, partnerYear);
+                const partnerDestiny = calculateNameNumber(partnerName);
+                const partnerSoul = calculateVowelNumber(partnerName);
+                const partnerPersonality = calculateConsonantNumber(partnerName);
+                
+                // Рассчитываем производные числа
+                const developmentNumber = calculateDevelopmentNumber(lifePath, birthDayNumber);
+                const karmicLessons = developmentNumber; // В некоторых системах совпадает с числом развития
+                const imageNumber = reduceToSingleDigit(soulNumber + destinyNumber);
+                const influenceNumber = reduceToSingleDigit(soulNumber + personalityNumber);
+                const realityNumber = reduceToSingleDigit(personalityNumber + developmentNumber);
+                const intuitiveNumber = reduceToSingleDigit(soulNumber + developmentNumber);
+                const qualitiesNumber = reduceToSingleDigit(destinyNumber + personalityNumber);
+                const rationalNumber = personalityNumber; // В простейшей интерпретации равно числу лица
+                const movementNumber = calculateConsonantNumber(fullName.substring(1)); // Без первой согласной
+                const stabilityNumber = calculateVowelNumber(fullName.substring(0, fullName.length - 1)); // Без последней гласной
+                
+                // Рассчитываем числа на основе отчества и фамилии
+                const nameParts = fullName.split(' ');
+                const firstName = nameParts[0];
+                const patronymic = nameParts[1];
+                const lastName = nameParts[2];
+                
+                const fathersLineNumber = calculateNameNumber(patronymic);
+                const mothersLineNumber = calculateNameNumber(lastName);
+                
+                // Рассчитываем числа на основе имени партнера
+                const partnerNameParts = partnerName.split(' ');
+                const partnerFirstName = partnerNameParts[0];
+                const partnerPatronymic = partnerNameParts[1];
+                const partnerLastName = partnerNameParts[2];
+                
+                const partnerFathersLine = calculateNameNumber(partnerPatronymic);
+                const partnerMothersLine = calculateNameNumber(partnerLastName);
+                
+                // Рассчитываем прогностические числа
+                const currentYear = 2026;
+                const personalYear2026 = calculatePersonalYear(lifePath, currentYear);
+                const personalYear2027 = calculatePersonalYear(lifePath, currentYear + 1);
+                const personalYear2028 = calculatePersonalYear(lifePath, currentYear + 2);
+                
+                // Рассчитываем числа для отношений
+                const partnershipNumber = calculatePartnershipNumber(lifePath, partnerLifePath);
+                const decisionNumber = reduceToSingleDigit(personalityNumber + destinyNumber);
+                const connectionNumber = reduceToSingleDigit(soulNumber + destinyNumber);
+                const soulCompatibility = reduceToSingleDigit(soulNumber + partnerSoul);
+                const destinyCompatibility = reduceToSingleDigit(destinyNumber + partnerDestiny);
+                
+                // Рассчитываем ведические числа
+                const mulaAnka = lifePath; // В ведической системе совпадает с числом жизненного пути
+                const namaAnka = destinyNumber; // В ведической системе совпадает с числом судьбы
+                const bhagyanKa = reduceToSingleDigit(mulaAnka + namaAnka);
+                const lagnaAnka = lifePath; // В ведической системе рассчитывается как сумма всех цифр даты рождения
+                
+                // Форматируем даты для отображения
+                const formattedBirthDate = formatDate(birthdate);
+                const formattedPartnerBirthDate = formatDate(partnerBirthdate);
+                
+                // Подготавливаем результаты
+                const results = [
+                    {
+                        title: "1. Число Жизненного Пути",
+                        value: lifePath,
+                        description: "Самая важная характеристика человека, его «код жизни». Раскрывает основную цель существования, ключевые уроки и общие черты характера, присущие человеку на протяжении всей жизни.",
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}): ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lifePath}`
+                    },
+                    {
+                        title: "2. Число Дня Рождения",
+                        value: birthDayNumber,
+                        description: "Отражает внутренний потенциал, скрытые таланты и ту энергию, которую человек приносит с собой в этот мир. Указывает на качества, которые человек проявляет в первую очередь.",
+                        calculation: `Сложение цифр дня рождения (${birthDay}): ${birthDay > 9 ? `${Math.floor(birthDay/10)} + ${birthDay%10} = ` : ''}${birthDayNumber}`
+                    },
+                    {
+                        title: "3. Число Судьбы (Выражения)",
+                        value: destinyNumber,
+                        description: "Раскрывает врожденные таланты, способности, карьерные предпочтения и тот потенциал, который человек может реализовать в жизни. Ключ к пониманию своего предназначения.",
+                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${destinyNumber}`
+                    },
+                    {
+                        title: "4. Число Души (Уржана)",
+                        value: soulNumber,
+                        description: "Раскрывает внутренние желания, страсти, скрытые мотивы и то, чего на самом деле хочет человек изнутри. Отвечает на вопрос: «Чего на самом деле хочет ваша душа?»",
+                        calculation: `Сумма числовых значений гласных букв в имени "${fullName}": ${fullName.split('').filter(c => 'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c)).map(c => letterValues[c]).join(' + ')} = ${soulNumber}`
+                    },
+                    {
+                        title: "5. Число Лица (Экспрессии)",
+                        value: personalityNumber,
+                        description: "Характеризует внешнее поведение человека, его социальный имидж и то, как он представляется окружающим. Показывает ту «маску», которую человек «надевает» для мира.",
+                        calculation: `Сумма числовых значений согласных букв в имени "${fullName}": ${fullName.split('').filter(c => !'АЕЁИОУЫЭЮЯаеёиоуыэюя'.includes(c) && letterValues[c]).map(c => letterValues[c]).join(' + ')} = ${personalityNumber}`
+                    },
+                    {
+                        title: "6. Число Развития",
+                        value: developmentNumber,
+                        description: "Указывает на жизненные вызовы, препятствия и области, где человеку необходимо развиваться. Помогает понять, над чем нужно работать для гармоничного становления личности.",
+                        calculation: `Число Жизненного Пути (${lifePath}) - Число Дня Рождения (${birthDayNumber}) = ${lifePath - birthDayNumber}${lifePath - birthDayNumber <= 0 ? ` + 9 = ${developmentNumber}` : ''} → ${developmentNumber}`
+                    },
+                    {
+                        title: "7. Число Кармических Уроков",
+                        value: karmicLessons,
+                        description: "Указывает на те области, где человеку предстоит исправить ошибки и завершить незавершенные дела. Связано с идеей кармы и необходимостью проработать определенные качества.",
+                        calculation: `Рассчитывается как Число Развития: ${developmentNumber}`
+                    },
+                    {
+                        title: "8. Число Внутренней Сущности",
+                        value: innerEssence,
+                        description: "Раскрывает тот внутренний мир человека, который остается скрытым даже от близких. Показывает глубинные аспекты личности, не проявляющиеся на поверхности.",
+                        calculation: `Сумма числовых значений всех букв имени, кроме первой и последней: "${fullName.substring(1, fullName.length-1)}" = ${innerEssence}`
+                    },
+                    {
+                        title: "9. Число Образа",
+                        value: imageNumber,
+                        description: "Показывает, каким человек видит самого себя, и помогает понять самооценку и представление о собственном предназначении.",
+                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${imageNumber}`
+                    },
+                    {
+                        title: "10. Число Влияния",
+                        value: influenceNumber,
+                        description: "Указывает на тех людей, которые оказывают на человека наибольшее влияние в его жизни, а также на то, кто находится в его ближайшем окружении.",
+                        calculation: `Число Души (${soulNumber}) + Число Лица (${personalityNumber}) = ${soulNumber + personalityNumber} → ${influenceNumber}`
+                    },
+                    {
+                        title: "11. Число Реальности",
+                        value: realityNumber,
+                        description: "Показывает, насколько адаптивен человек, насколько хорошо он понимает реальные условия жизни и как он справляется с вызовами и препятствиями.",
+                        calculation: `Число Лица (${personalityNumber}) + Число Развития (${developmentNumber}) = ${personalityNumber + developmentNumber} → ${realityNumber}`
+                    },
+                    {
+                        title: "12. Число Интуитивного Понимания",
+                        value: intuitiveNumber,
+                        description: "Раскрывает глубину восприятия и уровень интуитивных способностей человека. Указывает на способность чувствовать скрытые смыслы и принимать верные решения.",
+                        calculation: `Число Души (${soulNumber}) + Число Развития (${developmentNumber}) = ${soulNumber + developmentNumber} → ${intuitiveNumber}`
+                    },
+                    {
+                        title: "13. Число Качеств",
+                        value: qualitiesNumber,
+                        description: "Описывает набор качеств, которые человек демонстрирует в своей деятельности и взаимодействии с миром. Показывает, как проявляются таланты в социуме.",
+                        calculation: `Число Судьбы (${destinyNumber}) + Число Лица (${personalityNumber}) = ${destinyNumber + personalityNumber} → ${qualitiesNumber}`
+                    },
+                    {
+                        title: "14. Число Рационального Мышления",
+                        value: rationalNumber,
+                        description: "Напрямую связано с логикой, анализом и практическими действиями. Отражает, как человек принимает решения и подходит к решению задач.",
+                        calculation: `В простейшей интерпретации равно Числу Лица: ${personalityNumber}`
+                    },
+                    {
+                        title: "15. Число Движения",
+                        value: movementNumber,
+                        description: "Показывает стиль и методы действий человека в жизни. Анализирует, как человек реализует свой потенциал и какие шаги предпочитает делать в первую очередь.",
+                        calculation: `Сумма числовых значений согласных букв имени, кроме первой: "${fullName.substring(1)}" = ${movementNumber}`
+                    },
+                    {
+                        title: "16. Число Стабильности",
+                        value: stabilityNumber,
+                        description: "Отражает потребность в безопасности, стабильности и материальном обеспечении. Показывает, насколько человек ориентирован на финансовую и эмоциональную стабильность.",
+                        calculation: `Сумма числовых значений гласных букв имени, кроме последней: "${fullName.substring(0, fullName.length-1)}" = ${stabilityNumber}`
+                    },
+                    {
+                        title: "17. Число Влияния Отцовской Линии",
+                        value: fathersLineNumber,
+                        description: "Показывает, какой вклад внесли отец, деды по отцовской линии и сам человек в развитие своего рода. Отражает наследственные таланты и проблемы, связанные с мужской энергией.",
+                        calculation: `Сумма числовых значений букв отчества "${patronymic}": ${patronymic.split('').map(c => letterValues[c] || c).join(' + ')} = ${fathersLineNumber}`
+                    },
+                    {
+                        title: "18. Число Влияния Материнской Линии",
+                        value: mothersLineNumber,
+                        description: "Указывает на влияние матери, бабушек по материнской линии и женского начала в целом. Раскрывает наследственные черты, связанные с домом, семьей и эмоциями.",
+                        calculation: `Сумма числовых значений букв фамилии "${lastName}": ${lastName.split('').map(c => letterValues[c] || c).join(' + ')} = ${mothersLineNumber}`
+                    },
+                    {
+                        title: "19. Число Личного Года (2026)",
+                        value: personalYear2026,
+                        description: "Указывает на доминирующую тему текущего года. Помогает понять, какие события и темы будут актуальны в течение 2026 года.",
+                        calculation: `Сумма цифр года (2+0+2+6=10 → 1) + Число Жизненного Пути (${lifePath}) = ${1 + lifePath} → ${personalYear2026}`
+                    },
+                    {
+                        title: "20. Число Личного Года (2027)",
+                        value: personalYear2027,
+                        description: "Указывает на доминирующую тему следующего года. Помогает подготовиться к событиям и темам, которые будут актуальны в 2027 году.",
+                        calculation: `Сумма цифр года (2+0+2+7=11) + Число Жизненного Пути (${lifePath}) = ${11 + lifePath} → ${personalYear2027}`
+                    },
+                    {
+                        title: "21. Число Личного Года (2028)",
+                        value: personalYear2028,
+                        description: "Указывает на доминирующую тему года после следующего. Помогает заглянуть в будущее и понять перспективы на 2028 год.",
+                        calculation: `Сумма цифр года (2+0+2+8=12 → 3) + Число Жизненного Пути (${lifePath}) = ${3 + lifePath} → ${personalYear2028}`
+                    },
+                    {
+                        title: "22. Число Решения",
+                        value: decisionNumber,
+                        description: "Помогает принимать верные решения в сложных ситуациях. Показывает, как лучше всего сочетать внешнее действие с внутренним потенциалом.",
+                        calculation: `Число Лица (${personalityNumber}) + Число Судьбы (${destinyNumber}) = ${personalityNumber + destinyNumber} → ${decisionNumber}`
+                    },
+                    {
+                        title: "23. Число Связи",
+                        value: connectionNumber,
+                        description: "Показывает, как человек строит отношения с другими людьми. Описывает, как внутренние желания человека сочетаются с его предназначением в паре.",
+                        calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${connectionNumber}`
+                    },
+                    {
+                        title: "24. Число Партнерства",
+                        value: partnershipNumber,
+                        description: "Используется для оценки совместимости двух людей. Дает представление о гармонии и потенциальных трудностях в отношениях.",
+                        calculation: `Число Жизненного Пути (${lifePath}) + Число Жизненного Пути партнера (${partnerLifePath}) = ${lifePath + partnerLifePath} → ${partnershipNumber}`
+                    },
+                    {
+                        title: "25. Число Совместимости Душ",
+                        value: soulCompatibility,
+                        description: "Показывает глубинную эмоциональную совместимость партнеров. Отражает, насколько близки внутренние желания и стремления двух людей.",
+                        calculation: `Число Души (${soulNumber}) + Число Души партнера (${partnerSoul}) = ${soulNumber + partnerSoul} → ${soulCompatibility}`
+                    },
+                    {
+                        title: "26. Число Совместимости Судьбы",
+                        value: destinyCompatibility,
+                        description: "Указывает на совместимость жизненных путей и предназначений партнеров. Показывает, насколько гармонично партнеры могут двигаться по жизни вместе.",
+                        calculation: `Число Судьбы (${destinyNumber}) + Число Судьбы партнера (${partnerDestiny}) = ${destinyNumber + partnerDestiny} → ${destinyCompatibility}`
+                    },
+                    {
+                        title: "27. Мула-анка (Ведическая)",
+                        value: mulaAnka,
+                        description: "Основное число или корневое число в ведической нумерологии. Является главным кодом судьбы и жизненной силы человека, символизирует кармическое предназначение.",
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`
+                    },
+                    {
+                        title: "28. Наманка (Ведическая)",
+                        value: namaAnka,
+                        description: "Число имени в ведической нумерологии. Показывает, как имя человека влияет на его судьбу, отражает социальный статус и репутацию.",
+                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`
+                    },
+                    {
+                        title: "29. Бхагянка (Ведическая)",
+                        value: bhagyanKa,
+                        description: "Число удачи в ведической нумерологии. Напрямую связано с благополучием, финансовым положением и общим уровнем счастья человека.",
+                        calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`
+                    },
+                    {
+                        title: "30. Лагна-анка (Ведическая)",
+                        value: lagnaAnka,
+                        description: "Указывает на лучший период времени для принятия важных решений, начала новых проектов или путешествий. Помогает определить наиболее благоприятные временные интервалы.",
+                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`
+                    },
+                    {
+                        title: "31. Число Жизненного Пути Партнера",
+                        value: partnerLifePath,
+                        description: "Основная характеристика партнера, его «код жизни». Раскрывает основную цель существования партнера, ключевые уроки и общие черты характера.",
+                        calculation: `Сложение всех цифр даты рождения партнера (${formattedPartnerBirthDate}): ${partnerBirthdate.split('-').join('').split('').join(' + ')} = ${partnerBirthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${partnerLifePath}`
+                    },
+                    {
+                        title: "32. Число Судьбы Партнера",
+                        value: partnerDestiny,
+                        description: "Раскрывает врожденные таланты, способности и потенциал партнера. Ключ к пониманию предназначения партнера и его жизненного пути.",
+                        calculation: `Сумма числовых значений всех букв полного имени партнера "${partnerName}": ${partnerName.split('').map(c => letterValues[c] || c).join(' + ')} = ${partnerDestiny}`
+                    }
+                ];
+                
+                // Отображаем результаты
+                const resultsContainer = document.getElementById('resultsContainer');
+                resultsContainer.innerHTML = '';
+                resultsContainer.style.display = 'grid';
+                
+                // Добавляем плавное появление результатов
+                setTimeout(() => {
+                    resultsContainer.classList.add('fade-in');
+                }, 100);
+                
+                // Создаем карточки для каждого результата
+                results.forEach((result, index) => {
+                    setTimeout(() => {
+                        const card = document.createElement('div');
+                        card.className = 'calculation-card';
+                        card.style.animationDelay = `${index * 0.05}s`;
+                        
+                        // Определяем, является ли число мастер-числом
+                        const isMasterNumber = [11, 22, 33].includes(result.value);
+                        const valueDisplay = isMasterNumber ? `<span class="master-number">${result.value}</span>` : result.value;
+                        
+                        card.innerHTML = `
+                            <h3>${result.title}</h3>
+                            <div class="result-value">${valueDisplay}</div>
+                            <div class="explanation">${result.description}</div>
+                            <div class="calculation"><strong>Расчет:</strong> ${result.calculation}</div>
+                            <div class="explanation"><strong>Интерпретация:</strong> ${getNumberDescription(result.value, 
+                                result.title.includes('Жизненного Пути') ? 'lifePath' : 
+                                result.title.includes('Судьбы') ? 'destiny' : 
+                                result.title.includes('Души') ? 'soul' : 
+                                result.title.includes('Лица') ? 'personality' : 'default')}</div>
+                        `;
+                        
+                        resultsContainer.appendChild(card);
+                    }, 100 + index * 100);
+                });
+                
+                // Прокручиваем к результатам
+                document.querySelector('.results-section').scrollIntoView({ behavior: 'smooth' });
             });
             
-            // Set current date for demonstration
-            birthDateInput.value = "1990-05-15";
-            document.getElementById('next-1').disabled = false;
+            // Устанавливаем сегодняшнюю дату по умолчанию
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthdate').value = today;
+            document.getElementById('partnerBirthdate').value = today;
             
-            // Initialize progress bar
-            updateProgressBar(1);
+            // Устанавливаем текущее время по умолчанию
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('birthTime').value = `${hours}:${minutes}`;
         });
     </script>
 </body>
 </html>
+
 

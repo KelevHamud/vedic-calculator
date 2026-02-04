@@ -698,6 +698,13 @@
                 font-size: 1.2rem;
             }
         }
+        
+        .optional-label {
+            color: #6a7b8c;
+            font-size: 0.95rem;
+            margin-top: 4px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -705,13 +712,13 @@
     <div class="container">
         <header>
             <h1>✨ Нумерологический Анализ ✨</h1>
-            <p class="subtitle">Глубокое погружение в вашу нумерологическую карту: 32 уникальных расчета с детальными интерпретациями, раскрывающими суть вашей личности, предназначения и жизненного пути</p>
+            <p class="subtitle">Глубокое погружение в вашу нумерологическую карту: до 32 уникальных расчетов с детальными интерпретациями, раскрывающими суть вашей личности, предназначения и жизненного пути</p>
         </header>
         
         <div class="intro-text">
             <p>Нумерология — это не просто наука о числах, а <span class="highlight">глубокая система самопознания</span>, позволяющая понять скрытые механизмы вашей жизни. Каждое число в вашей нумерологической карте раскрывает определенный аспект вашей личности, судьбы и потенциала.</p>
             <p>Наш калькулятор использует <span class="highlight">пифагорейскую систему</span> для анализа русских имен и дат рождения. Все расчеты соответствуют классическим методикам, описанным в авторитетных источниках по систематизации нумерологических вычислений.</p>
-            <p>Мы учитываем <span class="highlight">мастер-числа (11, 22, 33)</span>, которые обладают особым вибрационным потенциалом и не сокращаются до однозначных значений. Каждая интерпретация написана экспертами и раскрывает глубинный смысл чисел в контексте конкретного расчета.</p>
+            <p>Поля для партнера являются <span class="highlight">опциональными</span>. Вы можете получить полный анализ даже без указания данных партнера. Расчеты, связанные с партнером, будут показаны только при их заполнении.</p>
         </div>
         
         <div class="calculator-container">
@@ -735,12 +742,12 @@
                         <input type="text" id="fullName" placeholder="Иван Иванович Иванов" required>
                     </div>
                     <div class="form-group">
-                        <label for="partnerBirthdate">Дата рождения партнера</label>
-                        <input type="date" id="partnerBirthdate" required>
+                        <label for="partnerBirthdate">Дата рождения партнера <span class="optional-label">(опционально)</span></label>
+                        <input type="date" id="partnerBirthdate">
                     </div>
                     <div class="form-group">
-                        <label for="partnerName">Полное имя партнера (ФИО)</label>
-                        <input type="text" id="partnerName" placeholder="Мария Сергеевна Петрова" required>
+                        <label for="partnerName">Полное имя партнера (ФИО) <span class="optional-label">(опционально)</span></label>
+                        <input type="text" id="partnerName" placeholder="Мария Сергеевна Петрова">
                     </div>
                 </div>
                 
@@ -1060,9 +1067,9 @@
                 const partnerBirthdate = document.getElementById('partnerBirthdate').value;
                 const partnerName = document.getElementById('partnerName').value.trim();
                 
-                // Валидация данных
-                if (!birthdate || !birthTime || !birthPlace || !fullName || !partnerBirthdate || !partnerName) {
-                    alert('Пожалуйста, заполните все поля формы');
+                // Валидация обязательных данных
+                if (!birthdate || !birthTime || !birthPlace || !fullName) {
+                    alert('Пожалуйста, заполните все обязательные поля формы');
                     return;
                 }
                 
@@ -1071,22 +1078,14 @@
                     return;
                 }
                 
-                if (partnerName.split(' ').length < 3) {
-                    alert('Пожалуйста, введите полное имя партнера (ФИО)');
-                    return;
-                }
+                // Проверяем наличие данных партнера
+                const hasPartnerData = partnerBirthdate && partnerName && partnerName.split(' ').length >= 3;
                 
                 // Парсим дату рождения
                 const birthDateObj = new Date(birthdate);
                 const birthDay = birthDateObj.getDate();
                 const birthMonth = birthDateObj.getMonth() + 1;
                 const birthYear = birthDateObj.getFullYear();
-                
-                // Парсим дату рождения партнера
-                const partnerDateObj = new Date(partnerBirthdate);
-                const partnerDay = partnerDateObj.getDate();
-                const partnerMonth = partnerDateObj.getMonth() + 1;
-                const partnerYear = partnerDateObj.getFullYear();
                 
                 // Рассчитываем основные числа
                 const lifePath = calculateBirthNumber(birthDay, birthMonth, birthYear);
@@ -1095,12 +1094,6 @@
                 const soulNumber = calculateVowelNumber(fullName);
                 const personalityNumber = calculateConsonantNumber(fullName);
                 const innerEssence = calculateInnerEssence(fullName);
-                
-                // Рассчитываем числа для партнера
-                const partnerLifePath = calculateBirthNumber(partnerDay, partnerMonth, partnerYear);
-                const partnerDestiny = calculateNameNumber(partnerName);
-                const partnerSoul = calculateVowelNumber(partnerName);
-                const partnerPersonality = calculateConsonantNumber(partnerName);
                 
                 // Рассчитываем производные числа
                 const developmentNumber = calculateDevelopmentNumber(lifePath, birthDayNumber);
@@ -1123,27 +1116,41 @@
                 const fathersLineNumber = calculateNameNumber(patronymic);
                 const mothersLineNumber = calculateNameNumber(lastName);
                 
-                // Рассчитываем числа на основе имени партнера
-                const partnerNameParts = partnerName.split(' ');
-                const partnerFirstName = partnerNameParts[0];
-                const partnerPatronymic = partnerNameParts[1];
-                const partnerLastName = partnerNameParts[2];
-                
-                const partnerFathersLine = calculateNameNumber(partnerPatronymic);
-                const partnerMothersLine = calculateNameNumber(partnerLastName);
-                
                 // Рассчитываем прогностические числа
                 const currentYear = 2026;
                 const personalYear2026 = calculatePersonalYear(lifePath, currentYear);
                 const personalYear2027 = calculatePersonalYear(lifePath, currentYear + 1);
                 const personalYear2028 = calculatePersonalYear(lifePath, currentYear + 2);
                 
-                // Рассчитываем числа для отношений
-                const partnershipNumber = calculatePartnershipNumber(lifePath, partnerLifePath);
-                const decisionNumber = reduceToSingleDigit(personalityNumber + destinyNumber);
-                const connectionNumber = reduceToSingleDigit(soulNumber + destinyNumber);
-                const soulCompatibility = reduceToSingleDigit(soulNumber + partnerSoul);
-                const destinyCompatibility = reduceToSingleDigit(destinyNumber + partnerDestiny);
+                // Рассчитываем числа для отношений (только если есть данные партнера)
+                let partnerLifePath = null;
+                let partnerDestiny = null;
+                let partnerSoul = null;
+                let partnerPersonality = null;
+                let partnershipNumber = null;
+                let decisionNumber = reduceToSingleDigit(personalityNumber + destinyNumber);
+                let connectionNumber = reduceToSingleDigit(soulNumber + destinyNumber);
+                let soulCompatibility = null;
+                let destinyCompatibility = null;
+                
+                if (hasPartnerData) {
+                    // Парсим дату рождения партнера
+                    const partnerDateObj = new Date(partnerBirthdate);
+                    const partnerDay = partnerDateObj.getDate();
+                    const partnerMonth = partnerDateObj.getMonth() + 1;
+                    const partnerYear = partnerDateObj.getFullYear();
+                    
+                    // Рассчитываем числа для партнера
+                    partnerLifePath = calculateBirthNumber(partnerDay, partnerMonth, partnerYear);
+                    partnerDestiny = calculateNameNumber(partnerName);
+                    partnerSoul = calculateVowelNumber(partnerName);
+                    partnerPersonality = calculateConsonantNumber(partnerName);
+                    
+                    // Рассчитываем числа для отношений
+                    partnershipNumber = calculatePartnershipNumber(lifePath, partnerLifePath);
+                    soulCompatibility = reduceToSingleDigit(soulNumber + partnerSoul);
+                    destinyCompatibility = reduceToSingleDigit(destinyNumber + partnerDestiny);
+                }
                 
                 // Рассчитываем ведические числа
                 const mulaAnka = lifePath;
@@ -1153,9 +1160,9 @@
                 
                 // Форматируем даты для отображения
                 const formattedBirthDate = formatDate(birthdate);
-                const formattedPartnerBirthDate = formatDate(partnerBirthdate);
+                const formattedPartnerBirthDate = hasPartnerData ? formatDate(partnerBirthdate) : null;
                 
-                // Подготавливаем результаты (все 32 расчета)
+                // Подготавливаем результаты (основные расчеты)
                 const results = [
                     {
                         title: "1. Число Жизненного Пути",
@@ -1317,71 +1324,109 @@
                         description: "Показывает, как человек строит отношения с другими людьми. Описывает, как внутренние желания человека сочетаются с его предназначением в паре.",
                         calculation: `Число Души (${soulNumber}) + Число Судьбы (${destinyNumber}) = ${soulNumber + destinyNumber} → ${connectionNumber}`,
                         type: "connection"
-                    },
-                    {
-                        title: "24. Число Партнерства",
-                        value: partnershipNumber,
-                        description: "Используется для оценки совместимости двух людей. Дает представление о гармонии и потенциальных трудностях в отношениях.",
-                        calculation: `Число Жизненного Пути (${lifePath}) + Число Жизненного Пути партнера (${partnerLifePath}) = ${lifePath + partnerLifePath} → ${partnershipNumber}`,
-                        type: "partnership"
-                    },
-                    {
-                        title: "25. Число Совместимости Душ",
-                        value: soulCompatibility,
-                        description: "Показывает глубинную эмоциональную совместимость партнеров. Отражает, насколько близки внутренние желания и стремления двух людей.",
-                        calculation: `Число Души (${soulNumber}) + Число Души партнера (${partnerSoul}) = ${soulNumber + partnerSoul} → ${soulCompatibility}`,
-                        type: "soulCompatibility"
-                    },
-                    {
-                        title: "26. Число Совместимости Судьбы",
-                        value: destinyCompatibility,
-                        description: "Указывает на совместимость жизненных путей и предназначений партнеров. Показывает, насколько гармонично партнеры могут двигаться по жизни вместе.",
-                        calculation: `Число Судьбы (${destinyNumber}) + Число Судьбы партнера (${partnerDestiny}) = ${destinyNumber + partnerDestiny} → ${destinyCompatibility}`,
-                        type: "destinyCompatibility"
-                    },
-                    {
-                        title: "27. Мула-анка (Ведическая)",
-                        value: mulaAnka,
-                        description: "Основное число или корневое число в ведической нумерологии. Является главным кодом судьбы и жизненной силы человека, символизирует кармическое предназначение.",
-                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`,
-                        type: "mulaAnka"
-                    },
-                    {
-                        title: "28. Наманка (Ведическая)",
-                        value: namaAnka,
-                        description: "Число имени в ведической нумерологии. Показывает, как имя человека влияет на его судьбу, отражает социальный статус и репутацию.",
-                        calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`,
-                        type: "namaAnka"
-                    },
-                    {
-                        title: "29. Бхагянка (Ведическая)",
-                        value: bhagyanKa,
-                        description: "Число удачи в ведической нумерологии. Напрямую связано с благополучием, финансовым положением и общим уровнем счастья человека.",
-                        calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`,
-                        type: "bhagyanKa"
-                    },
-                    {
-                        title: "30. Лагна-анка (Ведическая)",
-                        value: lagnaAnka,
-                        description: "Указывает на лучший период времени для принятия важных решений, начала новых проектов или путешествий. Помогает определить наиболее благоприятные временные интервалы.",
-                        calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`,
-                        type: "lagnaAnka"
-                    },
-                    {
-                        title: "31. Число Жизненного Пути Партнера",
-                        value: partnerLifePath,
-                        description: "Основная характеристика партнера, его «код жизни». Раскрывает основную цель существования партнера, ключевые уроки и общие черты характера.",
-                        calculation: `Сложение всех цифр даты рождения партнера (${formattedPartnerBirthDate}): ${partnerBirthdate.split('-').join('').split('').join(' + ')} = ${partnerBirthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${partnerLifePath}`,
-                        type: "partnerLifePath"
-                    },
-                    {
-                        title: "32. Число Судьбы Партнера",
-                        value: partnerDestiny,
-                        description: "Раскрывает врожденные таланты, способности и потенциал партнера. Ключ к пониманию предназначения партнера и его жизненного пути.",
-                        calculation: `Сумма числовых значений всех букв полного имени партнера "${partnerName}": ${partnerName.split('').map(c => letterValues[c] || c).join(' + ')} = ${partnerDestiny}`,
-                        type: "partnerDestiny"
                     }
                 ];
+                
+                // Добавляем расчеты для партнера, если есть данные
+                if (hasPartnerData) {
+                    results.push(
+                        {
+                            title: "24. Число Партнерства",
+                            value: partnershipNumber,
+                            description: "Используется для оценки совместимости двух людей. Дает представление о гармонии и потенциальных трудностях в отношениях.",
+                            calculation: `Число Жизненного Пути (${lifePath}) + Число Жизненного Пути партнера (${partnerLifePath}) = ${lifePath + partnerLifePath} → ${partnershipNumber}`,
+                            type: "partnership"
+                        },
+                        {
+                            title: "25. Число Совместимости Душ",
+                            value: soulCompatibility,
+                            description: "Показывает глубинную эмоциональную совместимость партнеров. Отражает, насколько близки внутренние желания и стремления двух людей.",
+                            calculation: `Число Души (${soulNumber}) + Число Души партнера (${partnerSoul}) = ${soulNumber + partnerSoul} → ${soulCompatibility}`,
+                            type: "soulCompatibility"
+                        },
+                        {
+                            title: "26. Число Совместимости Судьбы",
+                            value: destinyCompatibility,
+                            description: "Указывает на совместимость жизненных путей и предназначений партнеров. Показывает, насколько гармонично партнеры могут двигаться по жизни вместе.",
+                            calculation: `Число Судьбы (${destinyNumber}) + Число Судьбы партнера (${partnerDestiny}) = ${destinyNumber + partnerDestiny} → ${destinyCompatibility}`,
+                            type: "destinyCompatibility"
+                        },
+                        {
+                            title: "27. Мула-анка (Ведическая)",
+                            value: mulaAnka,
+                            description: "Основное число или корневое число в ведической нумерологии. Является главным кодом судьбы и жизненной силы человека, символизирует кармическое предназначение.",
+                            calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`,
+                            type: "mulaAnka"
+                        },
+                        {
+                            title: "28. Наманка (Ведическая)",
+                            value: namaAnka,
+                            description: "Число имени в ведической нумерологии. Показывает, как имя человека влияет на его судьбу, отражает социальный статус и репутацию.",
+                            calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`,
+                            type: "namaAnka"
+                        },
+                        {
+                            title: "29. Бхагянка (Ведическая)",
+                            value: bhagyanKa,
+                            description: "Число удачи в ведической нумерологии. Напрямую связано с благополучием, финансовым положением и общим уровнем счастья человека.",
+                            calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`,
+                            type: "bhagyanKa"
+                        },
+                        {
+                            title: "30. Лагна-анка (Ведическая)",
+                            value: lagnaAnka,
+                            description: "Указывает на лучший период времени для принятия важных решений, начала новых проектов или путешествий. Помогает определить наиболее благоприятные временные интервалы.",
+                            calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`,
+                            type: "lagnaAnka"
+                        },
+                        {
+                            title: "31. Число Жизненного Пути Партнера",
+                            value: partnerLifePath,
+                            description: "Основная характеристика партнера, его «код жизни». Раскрывает основную цель существования партнера, ключевые уроки и общие черты характера.",
+                            calculation: `Сложение всех цифр даты рождения партнера (${formattedPartnerBirthDate}): ${partnerBirthdate.split('-').join('').split('').join(' + ')} = ${partnerBirthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${partnerLifePath}`,
+                            type: "partnerLifePath"
+                        },
+                        {
+                            title: "32. Число Судьбы Партнера",
+                            value: partnerDestiny,
+                            description: "Раскрывает врожденные таланты, способности и потенциал партнера. Ключ к пониманию предназначения партнера и его жизненного пути.",
+                            calculation: `Сумма числовых значений всех букв полного имени партнера "${partnerName}": ${partnerName.split('').map(c => letterValues[c] || c).join(' + ')} = ${partnerDestiny}`,
+                            type: "partnerDestiny"
+                        }
+                    );
+                } else {
+                    // Если нет данных партнера, добавляем ведические расчеты без партнерских
+                    results.push(
+                        {
+                            title: "24. Мула-анка (Ведическая)",
+                            value: mulaAnka,
+                            description: "Основное число или корневое число в ведической нумерологии. Является главным кодом судьбы и жизненной силы человека, символизирует кармическое предназначение.",
+                            calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${mulaAnka}`,
+                            type: "mulaAnka"
+                        },
+                        {
+                            title: "25. Наманка (Ведическая)",
+                            value: namaAnka,
+                            description: "Число имени в ведической нумерологии. Показывает, как имя человека влияет на его судьбу, отражает социальный статус и репутацию.",
+                            calculation: `Сумма числовых значений всех букв полного имени "${fullName}": ${fullName.split('').map(c => letterValues[c] || c).join(' + ')} = ${namaAnka}`,
+                            type: "namaAnka"
+                        },
+                        {
+                            title: "26. Бхагянка (Ведическая)",
+                            value: bhagyanKa,
+                            description: "Число удачи в ведической нумерологии. Напрямую связано с благополучием, финансовым положением и общим уровнем счастья человека.",
+                            calculation: `Мула-анка (${mulaAnka}) + Наманка (${namaAnka}) = ${mulaAnka + namaAnka} → ${bhagyanKa}`,
+                            type: "bhagyanKa"
+                        },
+                        {
+                            title: "27. Лагна-анка (Ведическая)",
+                            value: lagnaAnka,
+                            description: "Указывает на лучший период времени для принятия важных решений, начала новых проектов или путешествий. Помогает определить наиболее благоприятные временные интервалы.",
+                            calculation: `Сложение всех цифр даты рождения (${formattedBirthDate}) до однозначного числа: ${birthdate.split('-').join('').split('').join(' + ')} = ${birthdate.split('-').join('').split('').reduce((a, b) => parseInt(a) + parseInt(b))} → ${lagnaAnka}`,
+                            type: "lagnaAnka"
+                        }
+                    );
+                }
                 
                 // Отображаем результаты
                 const resultsContainer = document.getElementById('resultsContainer');
@@ -1427,7 +1472,6 @@
             // Устанавливаем сегодняшнюю дату по умолчанию
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('birthdate').value = today;
-            document.getElementById('partnerBirthdate').value = today;
             
             // Устанавливаем текущее время по умолчанию
             const now = new Date();
